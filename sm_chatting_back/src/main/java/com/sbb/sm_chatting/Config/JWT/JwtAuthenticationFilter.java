@@ -2,6 +2,7 @@ package com.sbb.sm_chatting.Config.JWT;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -27,7 +28,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             System.out.println("권한: " + authentication.getAuthorities());
             // SecurityContext 에 Authentication 객체를 저장합니다.
-            //SecurityContextHolder.getContext().setAuthentication(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
             System.out.println("토큰 유효하다");
         }
         chain.doFilter(request, response);

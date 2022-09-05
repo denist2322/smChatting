@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,4 +24,10 @@ public class User {
     private String userPassword;
     private String userRole;
 
+    public List<String> getRoleList() {
+        if(this.userRole.length() > 0) {
+            return Arrays.asList(this.userRole.split(","));
+        }
+        return new ArrayList<>();
+    }
 }

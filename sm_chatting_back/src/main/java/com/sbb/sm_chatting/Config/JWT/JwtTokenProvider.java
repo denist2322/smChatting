@@ -26,7 +26,7 @@ public class JwtTokenProvider {
 
     @Autowired
     private UserRepository userRepository;
-    private String secretKey = "llshlllshlllshlllshl";
+    private String secretKey = "smhopeisrich";
 
     // 토큰 유효시간 30분
     private long tokenValidTime = 30 * 60 * 1000L;
@@ -55,12 +55,9 @@ public class JwtTokenProvider {
 
     // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token) {
-        System.out.println("userPk: " + this.getUserPk(token));
         User user = userRepository.findByUserName(this.getUserPk(token)).get();
-        System.out.println("user: " + user.getUserName());
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUserName());//!!
-            UsernamePasswordAuthenticationToken tmpToken = new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-        System.out.println("임시 토큰: " + tmpToken);
+        UsernamePasswordAuthenticationToken tmpToken = new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
         return tmpToken;
     }
 

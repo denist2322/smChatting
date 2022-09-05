@@ -30,7 +30,7 @@ public class SecurityConfig {
                          .and()
                          .authorizeRequests()
                          .antMatchers("/admin/**").hasRole("ADMIN")
-                         .antMatchers("/user/**").hasRole("USER")
+                         .antMatchers("/user/**").hasAnyRole("USER","ADMIN")
                          .antMatchers("/**").permitAll()
                          .and()
                          .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
