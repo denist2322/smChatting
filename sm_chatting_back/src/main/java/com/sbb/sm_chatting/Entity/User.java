@@ -13,12 +13,12 @@ import java.time.LocalDateTime;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long UserId;
-    private LocalDateTime UserRegDate;
-    private LocalDateTime UserUpdateDate;
-    private String UserEmail;
-    private String UserName;
-    private String UserPassword;
-    private String UserRole;
+    private long userId;
+    private LocalDateTime userRegDate;
+    private LocalDateTime userUpdateDate;
+    private String userEmail;
+    private String userName;
+    private String userPassword;
+    private String userRole;
 
 }
