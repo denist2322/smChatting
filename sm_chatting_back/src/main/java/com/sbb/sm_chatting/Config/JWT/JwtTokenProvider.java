@@ -1,6 +1,5 @@
 package com.sbb.sm_chatting.Config.JWT;
 
-import com.sbb.sm_chatting.Entity.User;
 import com.sbb.sm_chatting.Repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -40,10 +39,13 @@ public class JwtTokenProvider {
     }
 
     // JWT 토큰 생성
-    public String createToken(String userPk, List<String> roles) {
+    public String createToken(String userEmail,String userPk, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(userPk); // JWT payload 에 저장되는 정보단위
         claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
-        Date now = new Date();
+        claims.put("email",userEmail); // 이메일을 추가
+        Date now = new Date(); // 시간 정보 객체 생성
+
+        // 진짜로 토큰 생성
         return Jwts.builder()
                 .setClaims(claims) // 정보 저장
                 .setIssuedAt(now) // 토큰 발행 시간 정보
@@ -55,14 +57,16 @@ public class JwtTokenProvider {
 
     // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token) {
-        User user = userRepository.findByUserName(this.getUserPk(token)).get();
-        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUserName());//!!
+        // getUserPk에서 뽑은 정보(유저 이름)로 userDetails 를 생성한다.
+        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
+        // 인증이 완료되면 인증된 생성자 Authentiation 객체를 생성한다.
         UsernamePasswordAuthenticationToken tmpToken = new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
         return tmpToken;
     }
 
     // 토큰에서 회원 정보 추출
     public String getUserPk(String token) {
+        // subject 에 유저 이름을 넣었다. return 값은 이름이 나올것이다.
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 

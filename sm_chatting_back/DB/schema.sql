@@ -1,3 +1,4 @@
+DROP DATABASE chatting;
 CREATE DATABASE chatting;
 USE chatting;
 
@@ -20,7 +21,7 @@ INSERT INTO `user` SET
    user_email = "admin@test.com",
    user_password = "admin";
 
-UPDATE `user` SET user_role = "ADMIN" WHERE user_email = "admin@test.com";
-UPDATE `user` SET user_name = "관리자" WHERE user_role = "ADMIN";
+UPDATE `user` SET user_role = "ROLE_ADMIN" WHERE user_email = "admin@test.com";
+UPDATE `user` SET user_name = "관리자" WHERE user_role = "ROLE_ADMIN";
 
 SELECT * FROM `user`;

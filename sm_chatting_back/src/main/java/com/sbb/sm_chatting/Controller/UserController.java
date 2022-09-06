@@ -24,13 +24,13 @@ public class UserController {
     @PostMapping("/login")
     @ResponseBody
     public String login(@RequestBody Map<String, String> user){
+        // 유저 이메일로 유저를 찾는다.
         User _user = userRepository.findByUserEmail(user.get("userEmail")).get();
+        // 유저 역할은 리스트로 선언했다.
         List<String> userRole = new ArrayList<>();
         userRole.add(_user.getUserRole());
-
-        String Token = jwtTokenProvider.createToken(_user.getUserName(), userRole);
-        System.out.println("왔음");
-        System.out.println(Token);
+        // 토큰을 생성함 -> 이메일, 이름, 역할 추가
+        String Token = jwtTokenProvider.createToken(_user.getUserEmail(),_user.getUserName(), userRole);
 
         return Token;
     }
