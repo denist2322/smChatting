@@ -58,8 +58,8 @@ public class JwtTokenProvider {
     // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token) {
         // getUserPk에서 뽑은 정보(유저 이름)로 userDetails 를 생성한다.
-        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
         // 인증이 완료되면 인증된 생성자 Authentiation 객체를 생성한다.
+        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));//!!
         UsernamePasswordAuthenticationToken tmpToken = new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
         return tmpToken;
     }
@@ -70,7 +70,7 @@ public class JwtTokenProvider {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
-    // Request의 Header에서 token 값을 가져옵니다. "X-AUTH-TOKEN" : "TOKEN값'
+    // Request의 Header에서 token 값을 가져온다. "X-AUTH-TOKEN" : "TOKEN값'
     public String resolveToken(HttpServletRequest request) {
         return request.getHeader("X-AUTH-TOKEN");
     }
