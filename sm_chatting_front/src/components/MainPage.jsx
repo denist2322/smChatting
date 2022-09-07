@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const MainPage = () => {
@@ -46,9 +47,8 @@ const MainPage = () => {
               <h2 className="text-4xl font-bold text-white">SMchatting</h2>
 
               <p className="max-w-xl mt-3 text-gray-300">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. In
-                autem ipsa, nulla laboriosam dolores, repellendus perferendis
-                libero suscipit nam temporibus molestiae
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. In autem ipsa, nulla laboriosam dolores,
+                repellendus perferendis libero suscipit nam temporibus molestiae
               </p>
             </div>
           </div>
@@ -57,18 +57,13 @@ const MainPage = () => {
         <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
           <div className="flex-1">
             <div className="text-center">
-              <h2 className="text-4xl font-bold text-center text-gray-700 dark:text-white">
-                SMchatting
-              </h2>
+              <h2 className="text-4xl font-bold text-center text-gray-700 dark:text-white">SMchatting</h2>
             </div>
 
             <div className="mt-8">
               <form onSubmit={onSubmit}>
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="block mb-2 text-sm text-gray-600 dark:text-gray-200"
-                  >
+                  <label htmlFor="email" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
                     Email Address
                   </label>
                   <input
@@ -85,10 +80,7 @@ const MainPage = () => {
 
                 <div className="mt-6">
                   <div className="flex justify-between mb-2">
-                    <label
-                      htmlFor="password"
-                      className="text-sm text-gray-600 dark:text-gray-200"
-                    >
+                    <label htmlFor="password" className="text-sm text-gray-600 dark:text-gray-200">
                       Password
                     </label>
                     <a
@@ -130,12 +122,9 @@ const MainPage = () => {
 
               <p className="mt-6 text-sm text-center text-gray-400">
                 계정이 없으신가요?{" "}
-                <a
-                  href=""
-                  className="text-blue-500 focus:outline-none focus:underline hover:underline"
-                >
+                <Link to="/joinPage" className="text-blue-500 focus:outline-none focus:underline hover:underline">
                   회원가입
-                </a>
+                </Link>
               </p>
             </div>
           </div>

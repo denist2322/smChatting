@@ -1,9 +1,18 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const JoinPage = () => {
+  const [userEmail, setUserEmail] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+  const [passwordComfirm, setPasswordComfirm] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  let errorMsg = null;
+
   const [passwordType, setPasswordType] = useState({
     type: "password",
     visible: false,
@@ -17,6 +26,37 @@ const JoinPage = () => {
       return { type: "password", visible: false };
     });
   };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const joinData = await axios({
+      url: `http://localhost:8031/join`,
+      method: "POST",
+      data: {
+        userEmail,
+        userName,
+        userPassword,
+        passwordComfirm,
+      },
+    });
+
+    if (joinData.data === "success") {
+      navigate("/");
+      return;
+    } else {
+      setError(joinData.data);
+    }
+  };
+
+  if (error === "noEmail") {
+    errorMsg = <span className="text-xs text-red-400">이메일을 입력해주세요.</span>;
+  } else if (error === "noName") {
+    errorMsg = <span className="text-xs text-red-400">이름을 입력해주세요.</span>;
+  } else if (error === "noPassword") {
+    errorMsg = <span className="text-xs text-red-400">비밀번호를 입력해주세요.</span>;
+  } else if (error === "notMatch") {
+    errorMsg = <span className="text-xs text-red-400">비밀번호가 일치하지 않습니다.</span>;
+  }
 
   const width = {
     width: "480px",
@@ -40,24 +80,27 @@ const JoinPage = () => {
             <path d="M12 14l9-5-9-5-9 5 9 5z" />
             <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
             />
           </svg>
         </div>
         <h3 className="text-2xl font-bold text-center">Join us</h3>
-        <form action="">
+        <form onSubmit={onSubmit}>
           <div className="mt-4">
             <div>
               <label className="block" htmlFor="email">
                 이메일
               </label>
               <input
-                type="text"
-                placeholder="Name"
+                type="email"
+                placeholder="Email"
                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+                onChange={(e) => {
+                  setUserEmail(e.target.value);
+                }}
               />
             </div>
             <div className="mt-4">
@@ -66,8 +109,11 @@ const JoinPage = () => {
               </label>
               <input
                 type="text"
-                placeholder="Email"
+                placeholder="Name"
                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+                onChange={(e) => {
+                  setUserName(e.target.value);
+                }}
               />
             </div>
             <div className="mt-4">
@@ -85,6 +131,9 @@ const JoinPage = () => {
                 type={passwordType.type}
                 placeholder="Password"
                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+                onChange={(e) => {
+                  setUserPassword(e.target.value);
+                }}
               />
             </div>
             <div className="mt-4">
@@ -93,9 +142,12 @@ const JoinPage = () => {
                 type={passwordType.type}
                 placeholder="Password"
                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
+                onChange={(e) => {
+                  setPasswordComfirm(e.target.value);
+                }}
               />
             </div>
-            <span className="text-xs text-red-400">비밀번호가 일치하지 않습니다.</span>
+            {errorMsg}
             <div className="mt-4">
               <button
                 className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
@@ -106,9 +158,9 @@ const JoinPage = () => {
             </div>
             <div className="flex justify-center mt-6 text-grey-dark">
               이미 계정이 있으신가요?
-              <a className="text-blue-600 hover:underline ml-4" href="#">
+              <Link to="/" className="text-blue-600 hover:underline ml-4">
                 로그인
-              </a>
+              </Link>
             </div>
           </div>
         </form>

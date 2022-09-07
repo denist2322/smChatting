@@ -3,13 +3,13 @@ package com.sbb.sm_chatting.Controller;
 import com.sbb.sm_chatting.Config.JWT.JwtTokenProvider;
 import com.sbb.sm_chatting.Entity.User;
 import com.sbb.sm_chatting.Repository.UserRepository;
+import com.sbb.sm_chatting.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +20,7 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final UserService userService;
 
     @PostMapping("/login")
     @ResponseBody
@@ -38,15 +39,26 @@ public class UserController {
     @PostMapping("/join")
     @ResponseBody
     public String join(@RequestBody Map<String, String> user){
-        User joinUser = new User();
-        joinUser.setUserEmail(user.get("userEmail"));
-        joinUser.setUserName(user.get("userName"));
-        joinUser.setUserRegDate(LocalDateTime.now());
-        joinUser.setUserUpdateDate(LocalDateTime.now());
-        joinUser.setUserPassword(user.get("userPassword"));
-        joinUser.setUserRole(user.get("userRole"));
-        userRepository.save(joinUser);
-        return "완료";
+        System.out.println("너는: " + user.get("userEmail"));
+        if(user.get("userEmail") == "") {
+            return "noEmail";
+        }
+
+        if(user.get("userName") == ""){
+            return "noName";
+        }
+
+        if(user.get("userPassword") == "" || user.get("passwordComfirm") == ""){
+            return "noPassword";
+        }
+
+        if(!user.get("userPassword").equals(user.get("passwordComfirm"))){
+            return "notMatch";
+        }
+
+        userService.join(user);
+
+        return "success";
     }
 
 }
