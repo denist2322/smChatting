@@ -1,8 +1,12 @@
 package com.sbb.sm_chatting.Controller;
+/*
+== Introduce ==
 
-import com.sbb.sm_chatting.Config.JWT.JwtTokenProvider;
-import com.sbb.sm_chatting.Entity.User;
-import com.sbb.sm_chatting.Repository.UserRepository;
+== Release ==
+22.09.07 : 유저 회원가입 구현(공백 에러 구현)
+         : 로그인 로직 컨트롤러 서비스 분리
+*/
+
 import com.sbb.sm_chatting.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -10,55 +14,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
 public class UserController {
-
-    private final UserRepository userRepository;
-    private final JwtTokenProvider jwtTokenProvider;
     private final UserService userService;
 
     @PostMapping("/login")
     @ResponseBody
     public String login(@RequestBody Map<String, String> user){
-        // 유저 이메일로 유저를 찾는다.
-        User _user = userRepository.findByUserEmail(user.get("userEmail")).get();
-        // 유저 역할은 리스트로 선언했다.
-        List<String> userRole = new ArrayList<>();
-        userRole.add(_user.getUserRole());
-        // 토큰을 생성함 -> 이메일, 이름, 역할 추가
-        String Token = jwtTokenProvider.createToken(_user.getUserEmail(),_user.getUserName(), userRole);
-
-        return Token;
+        // 로그인 성공시 토큰이 발급되며 그렇지 않다면 에러메시지가 return 된다.
+        return userService.login(user);
     }
 
     @PostMapping("/join")
     @ResponseBody
     public String join(@RequestBody Map<String, String> user){
-        System.out.println("너는: " + user.get("userEmail"));
-        if(user.get("userEmail") == "") {
-            return "noEmail";
-        }
+        // 회원가입에 따른 서비스로부터 받은 성공/오류메시지를 넘긴다.
+        return userService.doJoin(user);
 
-        if(user.get("userName") == ""){
-            return "noName";
-        }
-
-        if(user.get("userPassword") == "" || user.get("passwordComfirm") == ""){
-            return "noPassword";
-        }
-
-        if(!user.get("userPassword").equals(user.get("passwordComfirm"))){
-            return "notMatch";
-        }
-
-        userService.join(user);
-
-        return "success";
     }
 
 }

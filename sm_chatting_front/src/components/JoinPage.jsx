@@ -9,7 +9,7 @@ const JoinPage = () => {
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [passwordComfirm, setPasswordComfirm] = useState("");
-  const [error, setError] = useState("");
+  const [errorJoin, setErrorJoin] = useState("");
   const navigate = useNavigate();
   let errorMsg = null;
 
@@ -42,19 +42,20 @@ const JoinPage = () => {
 
     if (joinData.data === "success") {
       navigate("/");
-      return;
     } else {
-      setError(joinData.data);
+      setErrorJoin(joinData.data);
     }
   };
 
-  if (error === "noEmail") {
+  if (errorJoin === "noEmail") {
     errorMsg = <span className="text-xs text-red-400">이메일을 입력해주세요.</span>;
-  } else if (error === "noName") {
+  } else if (errorJoin === "existEmail") {
+    errorMsg = <span className="text-xs text-red-400">이메일이 이미 존재합니다.</span>;
+  } else if (errorJoin === "noName") {
     errorMsg = <span className="text-xs text-red-400">이름을 입력해주세요.</span>;
-  } else if (error === "noPassword") {
+  } else if (errorJoin === "noPassword") {
     errorMsg = <span className="text-xs text-red-400">비밀번호를 입력해주세요.</span>;
-  } else if (error === "notMatch") {
+  } else if (errorJoin === "notMatch") {
     errorMsg = <span className="text-xs text-red-400">비밀번호가 일치하지 않습니다.</span>;
   }
 

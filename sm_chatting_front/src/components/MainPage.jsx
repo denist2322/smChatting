@@ -1,17 +1,29 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+// MainPage 컴포넌트 시작
 const MainPage = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [errorLogin, setErrorLogin] = useState("");
+  let errorMsg = null;
+  const navigate = useNavigate();
+
   const [passwordType, setPasswordType] = useState({
     type: "password",
     visible: false,
   });
 
+  // 메인화면 이미지를 주기위한 변수
+  const mainImage = {
+    backgroundImage:
+      "url(https://images.unsplash.com/photo-1616763355603-9755a640a287?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)",
+  };
+  
+
+  // 비밀번호 숨기기 보이기 로직 (visible를 가지고 type을 정해준다.)
   const handlePasswordType = (e) => {
     setPasswordType(() => {
       if (!passwordType.visible) {
@@ -21,22 +33,43 @@ const MainPage = () => {
     });
   };
 
-  const mainImage = {
-    backgroundImage:
-      "url(https://images.unsplash.com/photo-1616763355603-9755a640a287?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)",
+  // 제출버튼을 누르면 통신(login 진행)
+  const onSubmit = async (e) => {
+    console.log("왔다감");
+    e.preventDefault();
+    const loginData = "" 
+    
+    if(userEmail !== "" && userPassword !== ""){
+      loginData = await axios({
+                  url: "http://localhost:8031/login",
+                  method: "POST",
+                  data: {
+                    userEmail,
+                    userPassword,
+                  },
+                });
+    }
+    else if(userEmail === ""){
+      errorMsg = <span className="text-xs text-red-400">이메일을 입력해주세요.</span>;
+      return;
+    }
+    else if(userPassword === ""){
+      errorMsg = <span className="text-xs text-red-400">비밀번호를 입력해주세요.</span>;
+      return;
+    }
+    
+    
+    if(loginData.data !== "emailFalse" && loginData.data !== "pwFalse"){
+      navigate("/MessengerPage");
+    }
+    else{
+      setErrorLogin(loginData.data);
+    }
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    await axios({
-      url: "http://localhost:8031/login",
-      method: "POST",
-      data: {
-        userEmail,
-        userPassword,
-      },
-    });
-  };
+  // if(errorLogin === ""){
+  //   errorMsg = <span className="text-xs text-red-400">이메일이 존재하지 않거나 비밀번호가 맞지 않습니다.</span>;
+  // }
 
   return (
     <div className="bg-white dark:bg-gray-900">
@@ -44,7 +77,7 @@ const MainPage = () => {
         <div className="hidden bg-cover lg:block lg:w-2/3" style={mainImage}>
           <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
             <div>
-              <h2 className="text-4xl font-bold text-white">SMchatting</h2>
+              <h2 className="text-4xl font-bold text-white">SMhopeTalk</h2>
 
               <p className="max-w-xl mt-3 text-gray-300">
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. In autem ipsa, nulla laboriosam dolores,
@@ -57,14 +90,14 @@ const MainPage = () => {
         <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
           <div className="flex-1">
             <div className="text-center">
-              <h2 className="text-4xl font-bold text-center text-gray-700 dark:text-white">SMchatting</h2>
+              <h2 className="text-4xl font-bold text-center text-gray-700 dark:text-white">SMhopeTalk</h2>
             </div>
 
             <div className="mt-8">
               <form onSubmit={onSubmit}>
                 <div>
                   <label htmlFor="email" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
-                    Email Address
+                    이메일
                   </label>
                   <input
                     type="email"
@@ -81,7 +114,7 @@ const MainPage = () => {
                 <div className="mt-6">
                   <div className="flex justify-between mb-2">
                     <label htmlFor="password" className="text-sm text-gray-600 dark:text-gray-200">
-                      Password
+                      비밀번호
                     </label>
                     <a
                       href="#"
@@ -109,7 +142,7 @@ const MainPage = () => {
                     )}
                   </span>
                 </div>
-
+                {errorMsg}
                 <div className="mt-6">
                   <button
                     className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
