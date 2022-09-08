@@ -8,7 +8,7 @@ const MainPage = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [errorLogin, setErrorLogin] = useState("");
-  let errorMsg = null;
+  let errorLog = null;
   const navigate = useNavigate();
 
   const [passwordType, setPasswordType] = useState({
@@ -21,7 +21,6 @@ const MainPage = () => {
     backgroundImage:
       "url(https://images.unsplash.com/photo-1616763355603-9755a640a287?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)",
   };
-  
 
   // 비밀번호 숨기기 보이기 로직 (visible를 가지고 type을 정해준다.)
   const handlePasswordType = (e) => {
@@ -35,41 +34,40 @@ const MainPage = () => {
 
   // 제출버튼을 누르면 통신(login 진행)
   const onSubmit = async (e) => {
-    console.log("왔다감");
     e.preventDefault();
-    const loginData = "" 
-    
-    if(userEmail !== "" && userPassword !== ""){
+    let loginData = "";
+
+    if (userEmail !== "" && userPassword !== "") {
       loginData = await axios({
-                  url: "http://localhost:8031/login",
-                  method: "POST",
-                  data: {
-                    userEmail,
-                    userPassword,
-                  },
-                });
-    }
-    else if(userEmail === ""){
-      errorMsg = <span className="text-xs text-red-400">이메일을 입력해주세요.</span>;
+        url: "http://localhost:8031/login",
+        method: "POST",
+        data: {
+          userEmail,
+          userPassword,
+        },
+      });
+    } else if (userEmail === "") {
+      setErrorLogin("noEmail");
+      return;
+    } else if (userPassword === "") {
+      setErrorLogin("noPw");
       return;
     }
-    else if(userPassword === ""){
-      errorMsg = <span className="text-xs text-red-400">비밀번호를 입력해주세요.</span>;
-      return;
-    }
-    
-    
-    if(loginData.data !== "emailFalse" && loginData.data !== "pwFalse"){
+
+    if (loginData.data !== "emailFalse" && loginData.data !== "pwFalse") {
       navigate("/MessengerPage");
-    }
-    else{
+    } else {
       setErrorLogin(loginData.data);
     }
   };
 
-  // if(errorLogin === ""){
-  //   errorMsg = <span className="text-xs text-red-400">이메일이 존재하지 않거나 비밀번호가 맞지 않습니다.</span>;
-  // }
+  if (errorLogin === "noEmail") {
+    errorLog = <span className="text-xs text-red-400">이메일을 입력해주세요.</span>;
+  } else if (errorLogin === "noPw") {
+    errorLog = <span className="text-xs text-red-400">비밀번호를 입력해주세요.</span>;
+  } else if (errorLogin === "emailFalse" || errorLogin === "pwFalse") {
+    errorLog = <span className="text-xs text-red-400">이메일 혹은 비밀번호가 일치하지 않습니다.</span>;
+  }
 
   return (
     <div className="bg-white dark:bg-gray-900">
@@ -142,7 +140,7 @@ const MainPage = () => {
                     )}
                   </span>
                 </div>
-                {errorMsg}
+                {errorLog}
                 <div className="mt-6">
                   <button
                     className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
