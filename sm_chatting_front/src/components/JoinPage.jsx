@@ -13,11 +13,13 @@ const JoinPage = () => {
   const navigate = useNavigate();
   let errorMsg = null;
 
+  // 비밀번호 보이기 숨기기
   const [passwordType, setPasswordType] = useState({
     type: "password",
     visible: false,
   });
 
+  // 비밀번호 보이기 숨기기 (visible에 따라 타입을 정해준다.)
   const handlePasswordType = (e) => {
     setPasswordType(() => {
       if (!passwordType.visible) {
@@ -27,19 +29,39 @@ const JoinPage = () => {
     });
   };
 
+  // 회원가입 버튼을 누르면 실행됨
   const onSubmit = async (e) => {
+    let joinData = "";
     e.preventDefault();
-    const joinData = await axios({
-      url: `http://localhost:8031/join`,
-      method: "POST",
-      data: {
-        userEmail,
-        userName,
-        userPassword,
-        passwordComfirm,
-      },
-    });
 
+    // 공백상태일 경우 프론트에서 차단하여 통신을 하지 못하도록 함.
+    if (userEmail !== "" && userName !== "" && userPassword !== "" && passwordComfirm !== "")
+      joinData = await axios({
+        url: `http://localhost:8031/join`,
+        method: "POST",
+        data: {
+          userEmail,
+          userName,
+          userPassword,
+          passwordComfirm,
+        },
+      });
+
+    // 각 input이 공백 일 경우 혹은 비밀번호와 비밀번호 확인이 일치하지 않을 경우 에러를 셋팅
+    if (userEmail === "") {
+      setErrorJoin("noEmail");
+      return;
+    } else if (userName === "") {
+      setErrorJoin("noName");
+      return;
+    } else if (userPassword === "" || passwordComfirm === "") {
+      setErrorJoin("noPassword");
+      return;
+    } else if (userPassword !== passwordComfirm) {
+      setErrorJoin("notMatch");
+      return;
+    }
+    // 성공적으로 회원가입이 된 경우 success를 받고 if문에 들어간다.
     if (joinData.data === "success") {
       navigate("/");
     } else {
@@ -59,10 +81,12 @@ const JoinPage = () => {
     errorMsg = <span className="text-xs text-red-400">비밀번호가 일치하지 않습니다.</span>;
   }
 
+  // 너비를 고정하기 위해서 사용
   const width = {
     width: "480px",
   };
 
+  // 아이콘 크기를 변경하기 위해 사용
   const fontSize = {
     fontSize: "14px",
   };
