@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate } from "react-router-dom";
+
 import axios from "axios";
 import "./Messenger.css";
 
-const filter = {
-  filter: "invert(100%)"
+const ImgSize = {
+  width: "80px",
+  height: "64px"
 }
 
 const Messenger = () =>{
@@ -32,12 +34,10 @@ const Messenger = () =>{
                 <main className="flex-grow flex flex-row min-h-0">
                     <section className="flex flex-col flex-none overflow-auto w-24 hover:w-64 group lg:max-w-sm md:w-2/5 transition-all duration-300 ease-in-out">
                         <div className="header p-4 flex flex-row justify-between items-center flex-none">
-                            <div className="w-16 h-16 relative flex flex-shrink-0" style={filter}>
-                                <img className="rounded-full w-full h-full object-cover" alt="ravisankarchinnam"
-                                    src="https://avatars3.githubusercontent.com/u/22351907?s=60"/>
-                                    <p className="text-white">로고</p>
+                            <div className="relative flex flex-shrink-0" style={ImgSize}>
+                                <img alt="" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbvlK8S%2FbtrLQog5d4O%2FZrKWnmHMkH50xmLXJ0J0sk%2Fimg.png"/>
                             </div>
-                            <p className="text-xl font-bold hidden md:block group-hover:block mr-7">SMhopeTalk</p>
+                            <p className="text-xl font-bold hidden md:block group-hover:block mr-12">SMhopeTalk</p>
                             <p/>
                         </div>
                         <div className="search-box p-4 flex-none">
