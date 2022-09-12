@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+
 // MainPage 컴포넌트 시작
 const MainPage = () => {
   const [userEmail, setUserEmail] = useState("");
@@ -56,6 +57,7 @@ const MainPage = () => {
     }
 
     if (loginData.data !== "emailFalse" && loginData.data !== "pwFalse") {
+      localStorage.setItem("Token",loginData.data);
       navigate("/MessengerPage");
     } else {
       setErrorLogin(loginData.data);
