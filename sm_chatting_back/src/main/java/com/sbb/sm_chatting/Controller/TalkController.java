@@ -1,6 +1,6 @@
 package com.sbb.sm_chatting.Controller;
 
-import com.sbb.sm_chatting.Entity.Talk;
+import com.sbb.sm_chatting.DAO.Talk;
 import com.sbb.sm_chatting.Service.TalkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

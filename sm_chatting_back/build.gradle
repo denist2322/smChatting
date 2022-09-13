@@ -19,7 +19,11 @@ repositories {
 }
 
 dependencies {
+	// 웹소켓
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-websocket', version: '2.7.3'
+	//jwt
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+	//시큐리티
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'

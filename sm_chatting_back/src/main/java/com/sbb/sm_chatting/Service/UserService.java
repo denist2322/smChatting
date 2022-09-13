@@ -1,7 +1,7 @@
 package com.sbb.sm_chatting.Service;
 
 import com.sbb.sm_chatting.Config.JWT.JwtTokenProvider;
-import com.sbb.sm_chatting.Entity.User;
+import com.sbb.sm_chatting.DAO.User;
 import com.sbb.sm_chatting.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
