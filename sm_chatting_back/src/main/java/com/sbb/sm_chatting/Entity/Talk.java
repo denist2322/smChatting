@@ -1,4 +1,4 @@
-package com.sbb.sm_chatting.DAO;
+package com.sbb.sm_chatting.Entity;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
 package com.sbb.sm_chatting.auth;
 
-import com.sbb.sm_chatting.DAO.User;
+import com.sbb.sm_chatting.Entity.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
