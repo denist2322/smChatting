@@ -3,47 +3,44 @@ CREATE DATABASE chatting;
 USE chatting;
 
 CREATE TABLE `user`(
-   user_id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-   user_reg_date DATE NOT NULL,
-   user_update_date DATE NOT NULL,
-   user_email VARCHAR(50) NOT NULL,
-   user_password VARCHAR(100) NOT NULL,
-   user_role VARCHAR(10) NOT NULL DEFAULT "USER"
+   userid INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   userregdate DATE NOT NULL,
+   userupdatedate DATE NOT NULL,
+   useremail VARCHAR(50) NOT NULL,
+   userpassword VARCHAR(100) NOT NULL,
+   userrole VARCHAR(10) NOT NULL DEFAULT "USER"
 );
 
-ALTER TABLE `user` MODIFY COLUMN user_role VARCHAR(10) NOT NULL DEFAULT "USER";
-ALTER TABLE `user` ADD user_name VARCHAR(30) NOT NULL;
-ALTER TABLE `user` MODIFY COLUMN user_name VARCHAR(30) NOT NULL AFTER user_email;
+ALTER TABLE `user` MODIFY COLUMN userrole VARCHAR(10) NOT NULL DEFAULT "USER";
+ALTER TABLE `user` ADD username VARCHAR(30) NOT NULL;
+ALTER TABLE `user` MODIFY COLUMN username VARCHAR(30) NOT NULL AFTER useremail;
 
 INSERT INTO `user` SET
-   user_reg_date = NOW(),
-   user_update_date = NOW(),
-   user_email = "admin@test.com",
-   user_password = "admin";
+   userregdate = NOW(),
+   userupdatedate = NOW(),
+   useremail = "admin@test.com",
+   userpassword = "admin";
 
-UPDATE `user` SET user_role = "ROLE_ADMIN" WHERE user_email = "admin@test.com";
-UPDATE `user` SET user_name = "관리자" WHERE user_role = "ROLE_ADMIN";
-
+UPDATE `user` SET userrole = "ROLE_ADMIN" WHERE useremail = "admin@test.com";
+UPDATE `user` SET username = "관리자" WHERE userrole = "ROLE_ADMIN";
 
 CREATE TABLE `talk`(
-   talk_reg_date DATE NOT NULL,
-   content TEXT NOT NULL,
-   send_user_id INT UNSIGNED NOT NULL,
-   receiver_user_id INT UNSIGNED NOT NULL
+   talkid BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   talkregdate DATE NOT NULL,
+   content TEXT NOT NULL
 );
 
 INSERT INTO `talk` SET
-   talk_reg_date = NOW(),
-   content = "야 프로필 사진 바꿨는데 어때?",
-   send_user_id = 1,
-   receiver_user_id = 2;
+   talkregdate = NOW(),
+   content = "야 프로필 사진 바꿨는데 어때?";
 
 
 INSERT INTO `talk` SET
-   talk_reg_date = NOW(),
-   content = "별로다",
-   send_user_id = 2,
-   receiver_user_id = 1;
+   talkregdate = NOW(),
+   content = "별로다";
+
 
 SELECT * FROM `user`;
 SELECT * FROM `talk`;
+SELECT t.content, t.talkregdate FROM talk t;
+SELECT t.content AS content FROM talk t;
