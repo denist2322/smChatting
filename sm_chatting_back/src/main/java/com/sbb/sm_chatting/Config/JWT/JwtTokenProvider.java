@@ -39,10 +39,10 @@ public class JwtTokenProvider {
     }
 
     // JWT 토큰 생성
-    public String createToken(String userEmail,String userPk, List<String> roles) {
+    public String createToken(String useremail,String userPk, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(userPk); // JWT payload 에 저장되는 정보단위
         claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
-        claims.put("email",userEmail); // 이메일을 추가
+        claims.put("email",useremail); // 이메일을 추가
         Date now = new Date(); // 시간 정보 객체 생성
 
         // 진짜로 토큰 생성

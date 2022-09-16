@@ -16,24 +16,24 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long userId;
-    private LocalDateTime userRegDate;
-    private LocalDateTime userUpdateDate;
-    private String userEmail;
-    private String userName;
-    private String userPassword;
-    private String userRole;
+    private long userid;
+    private LocalDateTime userregdate;
+    private LocalDateTime userupdatedate;
+    private String useremail;
+    private String username;
+    private String userpassword;
+    private String userrole;
 
     public List<String> getRoleList() {
-        if(this.userRole.length() > 0) {
-            return Arrays.asList(this.userRole.split(","));
+        if(this.userrole.length() > 0) {
+            return Arrays.asList(this.userrole.split(","));
         }
         return new ArrayList<>();
     }
-    // 유저 기준으로 보낸 대화
-    @OneToMany(mappedBy = "send", cascade = CascadeType.REMOVE)
-    private List<Talk> sendTalkList;
-    // 유저 기준으로 받은 대화
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.REMOVE)
-    private List<Talk> receiverTalkList;
+//    // 유저 기준으로 보낸 대화
+//    @OneToMany(mappedBy = "send", cascade = CascadeType.REMOVE)
+//    private List<Talk> sendTalkList;
+//    // 유저 기준으로 받은 대화
+//    @OneToMany(mappedBy = "receiver", cascade = CascadeType.REMOVE)
+//    private List<Talk> receiverTalkList;
 }

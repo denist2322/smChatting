@@ -9,16 +9,16 @@ public class Message {
     private String roomId;
     private String writerId;
     private String content;
-    private Date createDate;
+    private String regdate;
 
     public Message() {
 
     }
 
-    public Message(String roomId, String writerId, String content, Date createDate) {
+    public Message(String content, Date createDate) {
         this.roomId = roomId;
         this.writerId = writerId;
         this.content = content;
-        this.createDate = createDate;
+        this.regdate = regdate;
     }
 }

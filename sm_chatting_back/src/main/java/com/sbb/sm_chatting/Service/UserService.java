@@ -22,12 +22,12 @@ public class UserService {
     public void join(Map<String, String> user) {
         // 회원가입 진행
         User joinUser = new User();
-        joinUser.setUserEmail(user.get("userEmail"));
-        joinUser.setUserName(user.get("userName"));
-        joinUser.setUserRegDate(LocalDateTime.now());
-        joinUser.setUserUpdateDate(LocalDateTime.now());
-        joinUser.setUserPassword(passwordEncoder.encode(user.get("userPassword")));
-        joinUser.setUserRole("ROLE_USER");
+        joinUser.setUseremail(user.get("userEmail"));
+        joinUser.setUsername(user.get("userName"));
+        joinUser.setUserregdate(LocalDateTime.now());
+        joinUser.setUserupdatedate(LocalDateTime.now());
+        joinUser.setUserpassword(passwordEncoder.encode(user.get("userPassword")));
+        joinUser.setUserrole("ROLE_USER");
         userRepository.save(joinUser);
     }
 
@@ -41,15 +41,15 @@ public class UserService {
 
         // 비밀번호를 복호화 하여 비교한다.
         // 관리자의 경우 처음부터 DB에 저장하기 때문에 암호화 불가 => 조건을 걸어 주어 맞을 경우 로그인 진행
-        if(passwordEncoder.matches(user.get("userPassword"),_user.getUserPassword()) ||
-                (_user.getUserEmail().equals("admin@test.com") && _user.getUserRole().equals("ROLE_ADMIN") && _user.getUserPassword().equals(user.get("userPassword")))){
+        if(passwordEncoder.matches(user.get("userPassword"),_user.getUserpassword()) ||
+                (_user.getUseremail().equals("admin@test.com") && _user.getUserrole().equals("ROLE_ADMIN") && _user.getUserpassword().equals(user.get("userPassword")))){
 
             // 역할은 리스트 형태로 저장한다
             List<String> userRole = new ArrayList<>();
-            userRole.add(_user.getUserRole());
+            userRole.add(_user.getUserrole());
 
             // 로그인 완료되며 JWT을 생성하고 넘겨준다.
-            return jwtTokenProvider.createToken(_user.getUserEmail(),_user.getUserName(), userRole);
+            return jwtTokenProvider.createToken(_user.getUseremail(),_user.getUsername(), userRole);
         }
         // 비밀번호가 같지 않다.
         return "pwFalse";
@@ -59,7 +59,7 @@ public class UserService {
     // == 이메일이 존재하는지 확인해주는 서비스  ==
     public User existEmail(String email){
         // 이메일이 존재하면 유저 정보를 넘기고 존재하지 않으면 null을 넘긴다
-        User user = userRepository.findByUserEmail(email).orElse(null);
+        User user = userRepository.findByUseremail(email).orElse(null);
         return user;
     }
 
@@ -70,7 +70,7 @@ public class UserService {
             return "noEmail";
         }
 
-        if(userRepository.existsByUserEmail(user.get("userEmail"))){
+        if(userRepository.existsByUseremail(user.get("userEmail"))){
             return "existEmail";
         }
 

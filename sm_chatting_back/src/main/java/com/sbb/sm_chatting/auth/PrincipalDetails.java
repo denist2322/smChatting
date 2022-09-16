@@ -26,15 +26,15 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getUserPassword();
+        return user.getUserpassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUserName();
+        return user.getUsername();
     }
 
-    public String getUserEmail(){ return user.getUserEmail();}
+    public String getUserEmail(){ return user.getUseremail();}
 
     @Override
     public boolean isAccountNonExpired() {

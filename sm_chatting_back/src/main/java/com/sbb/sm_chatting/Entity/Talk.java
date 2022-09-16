@@ -2,7 +2,10 @@ package com.sbb.sm_chatting.Entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
@@ -10,15 +13,7 @@ import java.time.LocalDateTime;
 public class Talk {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private long talkId;
-    private LocalDateTime talkRegDate;
+    private long talkid;
+    private LocalDateTime talkregdate;
     private String content;
-
-    // 유저에 의해 대화가 보내짐
-    @ManyToOne
-    User send;
-    // 보낸 대화를 받은 유저
-    @ManyToOne
-    User receiver;
-
 }
