@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 public class Message {
     private String roomId;
-    private String writerId;
+    private int writerId;
     private String content;
     private String regdate;
 

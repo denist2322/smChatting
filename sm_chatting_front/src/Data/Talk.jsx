@@ -14,15 +14,15 @@ const Talk = () => {
       // client.send("/app/join", {} ,JSON.stringify(localStorage.getItem("Token")))
 
       // (초기 셋팅)처음 들어오면 DB에 있는 메시지를 추출함
-      client.send(`/app/first`, {});
+      client.send(`/app/first/3과4`, {}, JSON.stringify("success"));
 
       //
-      client.subscribe("/queue/firstChat", function (Message) {
+      client.subscribe("/queue/firstChat/3과4", function (Message) {
         const newMsg = JSON.parse(Message.body).map((a) => a.content);
         setMsg(newMsg);
       });
 
-      client.subscribe("/queue/addChatToClient", function (Message) {
+      client.subscribe("/queue/addChatToClient/3과4", function (Message) {
         const newMsg = JSON.parse(Message.body).content;
         setMsg((prev) => prev.concat(newMsg));
       });
@@ -31,7 +31,7 @@ const Talk = () => {
 
   const handleSubmit = (e, content) => {
     e.preventDefault();
-    client.send(`/app/chat`, {}, JSON.stringify({ content }));
+    client.send(`/app/chat/3과4`, {}, JSON.stringify({ content }));
     setContent("");
   };
 

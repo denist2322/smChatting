@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface TalkRepository extends JpaRepository<Talk, Long> {
-    List<TalkSetting> findAllBy();
+    List<TalkSetting> findByTalkroomId(String id);
 }

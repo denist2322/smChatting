@@ -2,6 +2,7 @@ package com.sbb.sm_chatting.Controller;
 
 import com.sbb.sm_chatting.DTO.TalkSetting;
 import com.sbb.sm_chatting.Repository.TalkRepository;
+import com.sbb.sm_chatting.Repository.TalkRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,9 @@ public class MainController {
 
     @Autowired
     private TalkRepository talkRepository;
+    @Autowired
+    private TalkRoomRepository talkRoomRepository;
+
 
     @PostMapping("/user/test")
     @ResponseBody
@@ -37,6 +41,6 @@ public class MainController {
     @GetMapping("/talk/test")
     @ResponseBody
     public List<TalkSetting> talkTest(){
-        return talkRepository.findAllBy();
+        return talkRepository.findByTalkroomId("1과2");
     }
 }

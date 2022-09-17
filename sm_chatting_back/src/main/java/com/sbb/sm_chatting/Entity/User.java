@@ -16,7 +16,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long userid;
+    private long id;
     private LocalDateTime userregdate;
     private LocalDateTime userupdatedate;
     private String useremail;
@@ -30,10 +30,4 @@ public class User {
         }
         return new ArrayList<>();
     }
-//    // 유저 기준으로 보낸 대화
-//    @OneToMany(mappedBy = "send", cascade = CascadeType.REMOVE)
-//    private List<Talk> sendTalkList;
-//    // 유저 기준으로 받은 대화
-//    @OneToMany(mappedBy = "receiver", cascade = CascadeType.REMOVE)
-//    private List<Talk> receiverTalkList;
 }

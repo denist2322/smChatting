@@ -35,21 +35,21 @@ public class UserService {
         User _user = existEmail(user.get("userEmail"));
 
         // 이메일이 존재하지않거나 공백일때 false를 넘긴다.
-        if(_user == null || user.get("userEmail") == ""){
+        if (_user == null || user.get("userEmail") == "") {
             return "emailFalse";
         }
 
         // 비밀번호를 복호화 하여 비교한다.
         // 관리자의 경우 처음부터 DB에 저장하기 때문에 암호화 불가 => 조건을 걸어 주어 맞을 경우 로그인 진행
-        if(passwordEncoder.matches(user.get("userPassword"),_user.getUserpassword()) ||
-                (_user.getUseremail().equals("admin@test.com") && _user.getUserrole().equals("ROLE_ADMIN") && _user.getUserpassword().equals(user.get("userPassword")))){
+        if (passwordEncoder.matches(user.get("userPassword"), _user.getUserpassword()) ||
+                (_user.getUseremail().equals("admin@test.com") && _user.getUserrole().equals("ROLE_ADMIN") && _user.getUserpassword().equals(user.get("userPassword")))) {
 
             // 역할은 리스트 형태로 저장한다
             List<String> userRole = new ArrayList<>();
             userRole.add(_user.getUserrole());
 
             // 로그인 완료되며 JWT을 생성하고 넘겨준다.
-            return jwtTokenProvider.createToken(_user.getUseremail(),_user.getUsername(), userRole);
+            return jwtTokenProvider.createToken(_user.getUseremail(), _user.getUsername(), userRole);
         }
         // 비밀번호가 같지 않다.
         return "pwFalse";
@@ -57,7 +57,7 @@ public class UserService {
     }
 
     // == 이메일이 존재하는지 확인해주는 서비스  ==
-    public User existEmail(String email){
+    public User existEmail(String email) {
         // 이메일이 존재하면 유저 정보를 넘기고 존재하지 않으면 null을 넘긴다
         User user = userRepository.findByUseremail(email).orElse(null);
         return user;
@@ -66,23 +66,23 @@ public class UserService {
 
     public String doJoin(Map<String, String> user) {
         // 회원가입 진행시 값이 공백일 경우 (입력값이 없을경우 각 if문에 들어가게 된다.)
-        if(user.get("userEmail") == "") {
+        if (user.get("userEmail") == "") {
             return "noEmail";
         }
 
-        if(userRepository.existsByUseremail(user.get("userEmail"))){
+        if (userRepository.existsByUseremail(user.get("userEmail"))) {
             return "existEmail";
         }
 
-        if(user.get("userName") == ""){
+        if (user.get("userName") == "") {
             return "noName";
         }
 
-        if(user.get("userPassword") == "" || user.get("passwordComfirm") == ""){
+        if (user.get("userPassword") == "" || user.get("passwordComfirm") == "") {
             return "noPassword";
         }
 
-        if(!user.get("userPassword").equals(user.get("passwordComfirm"))){
+        if (!user.get("userPassword").equals(user.get("passwordComfirm"))) {
             return "notMatch";
         }
 

@@ -14,7 +14,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         // enableSimpleBroker()
-        // 스프링에서 제공하는 내장프로커로 /sub로 들어오는 메시지를 브로커가 처리한다. (구독)
+        // 스프링에서 제공하는 내장프로커로 /queue(1:1) 혹은 /topic(1:N) 으로 들어오는 메시지를 브로커가 처리한다. (구독)
         registry.enableSimpleBroker("/queue","/topic");
 
         // setApplicationDestinationPrefixes()

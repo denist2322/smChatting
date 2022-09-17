@@ -5,4 +5,5 @@ import java.time.LocalDateTime;
 public interface TalkSetting {
     LocalDateTime getTalkregdate();
     String getContent();
+    int getSenduserid();
 }
