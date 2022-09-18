@@ -49,7 +49,7 @@ public class UserService {
             userRole.add(_user.getUserrole());
 
             // 로그인 완료되며 JWT을 생성하고 넘겨준다.
-            return jwtTokenProvider.createToken(_user.getUseremail(), _user.getUsername(), userRole);
+            return jwtTokenProvider.createToken(_user.getUseremail(), _user.getUsername(), userRole, _user.getId());
         }
         // 비밀번호가 같지 않다.
         return "pwFalse";
