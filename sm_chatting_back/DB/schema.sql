@@ -84,5 +84,25 @@ SELECT t.content AS content FROM talk t;
 
 SELECT * FROM talkroom WHERE id LIKE "%'3'%";
 
+SELECT * FROM `talk` WHERE talkroom_id LIKE "%'1'%" GROUP BY talkroom_id;
+
+SELECT * FROM (
+    SELECT * FROM `talk`
+    WHERE talkroom_id LIKE "%'1'%" ORDER BY id DESC
+    ) a GROUP BY talkroom_id;
+
+SELECT t FROM (
+    SELECT k FROM talk AS k
+    WHERE k.talkroom_id LIKE "%'1'%" ORDER BY k.id DESC
+    ) AS t a GROUP BY t.talkroom_id;
+
+
+SELECT
+        *
+    FROM
+        talk
+    WHERE
+        talkroom_id = "'1'과'2'";
+
 
 
