@@ -19,3 +19,6 @@ $ npm i -S @fortawesome/free-solid-svg-icons
 
 // 웹 소캣
 npm i sockjs-client react-stomp
+
+// base-64
+npm i base-64

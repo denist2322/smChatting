@@ -42,6 +42,6 @@ public class TalkService {
 
     public void convertMessage(Message message, Talk talk) {
         message.setRegdate(talk.getTalkregdate().toString());
-        message.setWriterId(talk.getSenduserid());
+        message.setSenduserid(talk.getSenduserid());
     }
 }

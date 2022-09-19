@@ -33,23 +33,6 @@ INSERT INTO `user` SET
 
 UPDATE `user` SET userrole = "ROLE_USER" WHERE useremail = "test@test.com";
 
-INSERT INTO `user` SET
-   userregdate = NOW(),
-   userupdatedate = NOW(),
-   useremail = "test@test.com",
-   userpassword = "1234",
-   username = "테스트 유저2";
-
-UPDATE `user` SET userrole = "ROLE_USER" WHERE useremail = "test@test.com";
-
-INSERT INTO `user` SET
-   userregdate = NOW(),
-   userupdatedate = NOW(),
-   useremail = "test@test.com",
-   userpassword = "1234",
-   username = "테스트 유저3";
-
-UPDATE `user` SET userrole = "ROLE_USER" WHERE useremail = "test@test.com";
 
 CREATE TABLE `talk`(
    id BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -72,22 +55,8 @@ INSERT INTO `talk` SET
    talkroom_id = "1과2";
 
 
-INSERT INTO `talk` SET
-   talkregdate = NOW(),
-   content = "야 프로필 사진 바꿨는데 어때?",
-   talkroom_id = "3과4";
-
-
-INSERT INTO `talk` SET
-   talkregdate = NOW(),
-   content = "별로다",
-   talkroom_id = "3과4";
-
-
 UPDATE `talk` SET senduserid = 1 WHERE id = 1;
 UPDATE `talk` SET senduserid = 2 WHERE id = 2;
-UPDATE `talk` SET senduserid = 3 WHERE id = 3;
-UPDATE `talk` SET senduserid = 4 WHERE id = 4;
 
 CREATE TABLE talkroom(
   id VARCHAR(200) NOT NULL PRIMARY KEY
@@ -96,8 +65,6 @@ CREATE TABLE talkroom(
 INSERT INTO talkroom SET
  id = "1과2";
 
-INSERT INTO talkroom SET
- id = "3과4";
 
 SELECT * FROM talkroom;
 SELECT * FROM `user`;
