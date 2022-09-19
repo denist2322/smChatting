@@ -11,12 +11,8 @@ public class TalkRoomService {
 
     private final TalkRoomRepository talkRoomRepository;
 
+    // 단일 채팅방을 가져온다 (대화내용 저장에 사용)
     public Talkroom getChatroom(String id) {
         return talkRoomRepository.findById(id).get();
     }
-
-//    public List<TalkSetting> talkList(String id) {
-//        Talkroom talkroom = talkRoomRepository.findById(id).get();
-//
-//    }
 }

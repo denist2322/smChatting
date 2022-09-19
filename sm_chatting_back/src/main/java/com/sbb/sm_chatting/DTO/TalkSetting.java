@@ -6,4 +6,5 @@ public interface TalkSetting {
     LocalDateTime getTalkregdate();
     String getContent();
     int getSenduserid();
+    String getTalkroomId();
 }

@@ -1,5 +1,6 @@
 package com.sbb.sm_chatting.Controller;
 
+import com.sbb.sm_chatting.DTO.ChatRoomSetting;
 import com.sbb.sm_chatting.DTO.Message;
 import com.sbb.sm_chatting.DTO.TalkSetting;
 import com.sbb.sm_chatting.Entity.Talk;
@@ -26,6 +27,8 @@ public class ChatController {
 
     private final TalkRoomService talkRoomService;
 
+
+    // 실시간 채팅에 대한 응답
     @MessageMapping("/chat/{id}")
     public void sendMessage(@Payload Message message, @DestinationVariable("id") String id) {
         Talk talk = talkService.TalkSave(message, id);
@@ -33,17 +36,18 @@ public class ChatController {
         this.simpMessagingTemplate.convertAndSend("/queue/addChatToClient/" + id, message);
     }
 
+    // 채팅방에 처음 들어갔을 때 정보를 대화 내용을 가져옴
     @MessageMapping("/first/{id}")
     public void firstSetting(@DestinationVariable("id") String id) {
         List<TalkSetting> talkList = talkService.talkList(id);
         this.simpMessagingTemplate.convertAndSend("/queue/firstChat/" + id, talkList);
     }
 
-//    @MessageMapping("/chatRoomSetting/{userId}")
-//    public  void
-//    @MessageMapping("/join")
-//    public void joinUser(@Payload String jwtToken){
-//        userList.add(jwtToken);
-//        userList.forEach(user-> System.out.println(user));
-//    }
+    // 로그인한 유저가 소속된 채팅방 목록을 추출함
+    @MessageMapping("/chatRoomSetting/{id}")
+    public void chatRoomSetting(@DestinationVariable("id") String id){
+        List<ChatRoomSetting> talkroomList = talkService.getChatroomList(id);
+        this.simpMessagingTemplate.convertAndSend("/queue/chatRoomSetting/" + id, talkroomList);
+    }
+
 }

@@ -1,6 +1,6 @@
 package com.sbb.sm_chatting.Controller;
 
-import com.sbb.sm_chatting.DTO.TalkSetting;
+import com.sbb.sm_chatting.DTO.ChatRoomSetting;
 import com.sbb.sm_chatting.Repository.TalkRepository;
 import com.sbb.sm_chatting.Repository.TalkRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class MainController {
 
     @GetMapping("/talk/test")
     @ResponseBody
-    public List<TalkSetting> talkTest(){
-        return talkRepository.findByTalkroomId("1과2");
+    public List<ChatRoomSetting> talkTest(){
+        return talkRepository.findByIdExsits("'1'");
     }
 }
