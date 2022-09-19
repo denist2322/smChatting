@@ -1,4 +1,4 @@
-const Talk = ({ msg, setMsg }) => {
+const Main = ({ msg, setMsg }) => {
   let userId = parseInt(localStorage.getItem("id"));
   return (
     <div>
@@ -37,7 +37,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
             </div>
             <div className="messages text-sm text-gray-700 grid grid-flow-row gap-2">
               <div className="flex items-center group">
-                <p className="px-4 py-3 rounded-t-full rounded-r-full bg-gray-800 max-w-xs lg:max-w-md text-gray-200">
+                <p className="px-4 py-2 rounded-t-full rounded-r-full bg-gray-800 max-w-xs lg:max-w-md text-gray-200">
                   {_msg.content}
                 </p>
                 <button
@@ -61,7 +61,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
   );
 };
 
-export default Talk;
+export default Main;
 
 {
   /* <div className="flex flex-row justify-start">
