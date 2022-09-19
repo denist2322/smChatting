@@ -46,24 +46,34 @@ ALTER TABLE `talk` ADD senduserid INT NOT NULL;
 INSERT INTO `talk` SET
    talkregdate = NOW(),
    content = "야 프로필 사진 바꿨는데 어때?",
-   talkroom_id = "1과2";
+   talkroom_id = "'1'과'2'";
 
 
 INSERT INTO `talk` SET
    talkregdate = NOW(),
    content = "별로다",
-   talkroom_id = "1과2";
+   talkroom_id = "'1'과'2'";
+
+
+INSERT INTO `talk` SET
+   talkregdate = NOW(),
+   content = "미안 나 남자친구 생겼어",
+   talkroom_id = "'1'과'3'";
 
 
 UPDATE `talk` SET senduserid = 1 WHERE id = 1;
 UPDATE `talk` SET senduserid = 2 WHERE id = 2;
+UPDATE `talk` SET senduserid = 3 WHERE id = 3;
 
 CREATE TABLE talkroom(
   id VARCHAR(200) NOT NULL PRIMARY KEY
 );
 
 INSERT INTO talkroom SET
- id = "1과2";
+ id = "'1'과'2'";
+
+INSERT INTO talkroom SET
+ id = "'1'과'3'";
 
 
 SELECT * FROM talkroom;
@@ -71,6 +81,8 @@ SELECT * FROM `user`;
 SELECT * FROM `talk`;
 SELECT t.content, t.talkregdate FROM talk t;
 SELECT t.content AS content FROM talk t;
+
+SELECT * FROM talkroom WHERE id LIKE "%'3'%";
 
 
 

@@ -38,6 +38,9 @@ public class ChatController {
         List<TalkSetting> talkList = talkService.talkList(id);
         this.simpMessagingTemplate.convertAndSend("/queue/firstChat/" + id, talkList);
     }
+
+//    @MessageMapping("/chatRoomSetting/{userId}")
+//    public  void
 //    @MessageMapping("/join")
 //    public void joinUser(@Payload String jwtToken){
 //        userList.add(jwtToken);

@@ -37,14 +37,14 @@ const Messenger = () => {
       // client.send("/app/join", {} ,JSON.stringify(localStorage.getItem("Token")))
 
       // (초기 셋팅)처음 들어오면 DB에 있는 메시지를 추출함
-      client.send(`/app/first/1과2`, {}, JSON.stringify("success"));
+      client.send(`/app/first/'1'과'2'`, {}, JSON.stringify("success"));
 
-      client.subscribe("/queue/firstChat/1과2", function (Message) {
+      client.subscribe("/queue/firstChat/'1'과'2'", function (Message) {
         const newMsg = JSON.parse(Message.body);
         setMsg(newMsg);
       });
 
-      client.subscribe("/queue/addChatToClient/1과2", function (Message) {
+      client.subscribe("/queue/addChatToClient/'1'과'2'", function (Message) {
         const newMsg = JSON.parse(Message.body);
         setMsg((prev) => [...prev, newMsg]);
       });
@@ -56,7 +56,9 @@ const Messenger = () => {
       <div className="flex-1 flex flex-col">
         <main className="flex-grow flex flex-row min-h-0">
           <section className="flex flex-col flex-none overflow-auto w-24 hover:w-64 group lg:max-w-sm md:w-2/5 transition-all duration-300 ease-in-out">
-            <div className="header p-4 flex flex-row justify-between items-center flex-none">{<SideHeader />}</div>
+            <div className="header p-4 flex flex-row justify-between items-center flex-none shadow">
+              {<SideHeader />}
+            </div>
             <div className="search-box p-4 flex-none">{<SearchUser />}</div>
             <div className="active-users flex flex-row p-2 overflow-auto w-0 min-w-full">{<Users />}</div>
             <div className="contacts p-2 flex-1 overflow-y-scroll">{<ChatList />}</div>

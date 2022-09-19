@@ -1,4 +1,32 @@
+import React, { useEffect, useState } from "react";
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
+
 const ChatList = () => {
+  const [msg, setMsg] = useState("");
+  const socket = new SockJS("http:/localhost:8031/chat/chatting");
+  const client = Stomp.over(socket);
+
+  useEffect(() => {
+    client.connect({}, () => {
+      // 연결시 jwt를 보냄
+      // client.send("/app/join", {} ,JSON.stringify(localStorage.getItem("Token")))
+
+      // (초기 셋팅)처음 들어오면 DB에 있는 메시지를 추출함
+      client.send(`/app/first/'1'과'3'`, {}, JSON.stringify("success"));
+
+      client.subscribe("/queue/firstChat/'1'과'3'", function (Message) {
+        const newMsg = JSON.parse(Message.body).map((a) => a.content);
+        setMsg(newMsg);
+      });
+
+      client.subscribe("/queue/addChatToClient/'1'과'3'", function (Message) {
+        const newMsg = JSON.parse(Message.body).content;
+        setMsg(newMsg);
+      });
+    });
+  }, []);
+
   return (
     <>
       <div className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
@@ -13,7 +41,7 @@ const ChatList = () => {
           <p>Angelina Jolie</p>
           <div className="flex items-center text-sm text-gray-600">
             <div className="min-w-0">
-              <p className="truncate">미안 나 남자친구 생겼어</p>
+              <p className="truncate">{msg}</p>
             </div>
           </div>
         </div>
