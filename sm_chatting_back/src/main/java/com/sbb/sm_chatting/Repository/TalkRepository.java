@@ -13,6 +13,11 @@ import java.util.List;
 public interface TalkRepository extends JpaRepository<Talk, Long> {
     List<TalkSetting> findByTalkroomId(String id);
 
-    @Query(value = "select t from Talk t where t.talkroom.id like %:s%")
+    @Query(value = "SELECT * FROM (" +
+            "    SELECT * FROM `talk`" +
+            "    WHERE talkroom_id LIKE %:s%  ORDER BY id DESC" +
+            "     LIMIT 18446744073709551615" +
+            "    ) a" +
+            "    GROUP BY talkroom_id" , nativeQuery=true)
     List<TalkSetting> findByIdExsits(@Param("s") String s);
 }

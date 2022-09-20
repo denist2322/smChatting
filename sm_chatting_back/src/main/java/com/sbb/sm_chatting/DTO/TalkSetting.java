@@ -1,17 +1,16 @@
 package com.sbb.sm_chatting.DTO;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public interface TalkSetting {
-
-    LocalDateTime getTalkregdate();
+    Date getTalkregdate();
     String getContent();
     int getSenduserid();
-    TalkroomId getTalkroom();
+    String getTalkroom_id();
 
-    interface TalkroomId {
-        String getId();
-    }
-
-
+//    TalkroomId getTalkroom();
+//
+//    interface TalkroomId {
+//        String getId();
+//    }
 }
