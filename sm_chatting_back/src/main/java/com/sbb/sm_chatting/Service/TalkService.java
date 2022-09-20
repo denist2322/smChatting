@@ -2,6 +2,7 @@ package com.sbb.sm_chatting.Service;
 
 import com.sbb.sm_chatting.DTO.Message;
 import com.sbb.sm_chatting.DTO.TalkSetting;
+import com.sbb.sm_chatting.DTO.UserId;
 import com.sbb.sm_chatting.Entity.Talk;
 import com.sbb.sm_chatting.Entity.Talkroom;
 import com.sbb.sm_chatting.Repository.TalkRepository;
@@ -24,7 +25,7 @@ public class TalkService {
     }
 
     // 대화 내용을 저장한다.
-    public Talk TalkSave(Message message, String roomId) {
+    public Talk TalkSave(Message message, String roomId, UserId userId) {
         Talk talk = new Talk();
         talk.setTalkregdate(LocalDateTime.now());
         talk.setContent(message.getContent());
@@ -35,8 +36,8 @@ public class TalkService {
         catch(NullPointerException e){
             return null;
         }
-        // 현재는 입시로 1로 처리함.
-        talk.setSenduserid(1);
+        // userId는 문자열이다. => int형으로 바꾸기 가능.
+        talk.setSenduserid(Integer.parseInt(userId.getUserId()));
 
         talkRepository.save(talk);
         return talk;
@@ -46,17 +47,13 @@ public class TalkService {
     public void convertMessage(Message message, Talk talk) {
         message.setRegdate(talk.getTalkregdate().toString());
         message.setSenduserid(talk.getSenduserid());
+        message.setTalkroom_id(talk.getTalkroom().getId());
     }
 
     // 최신 채팅 내역 및 방을 가져온다.
     public List<TalkSetting> getChatroomList(String id) {
         return talkRepository.findByIdExsits(id);
     }
-
-    // 사이드바 이용을 위한 대화내용을 가져온다.
-//    public List<ChatRoomSetting> getChatroomList(String id) {
-//       return talkRepository.findByIdExsits(id);
-//    }
 
 
 }

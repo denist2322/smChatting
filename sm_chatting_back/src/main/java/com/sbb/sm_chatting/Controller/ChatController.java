@@ -2,6 +2,7 @@ package com.sbb.sm_chatting.Controller;
 
 import com.sbb.sm_chatting.DTO.Message;
 import com.sbb.sm_chatting.DTO.TalkSetting;
+import com.sbb.sm_chatting.DTO.UserId;
 import com.sbb.sm_chatting.Entity.Talk;
 import com.sbb.sm_chatting.Service.TalkRoomService;
 import com.sbb.sm_chatting.Service.TalkService;
@@ -26,13 +27,14 @@ public class ChatController {
 
     private final TalkRoomService talkRoomService;
 
-
     // 실시간 채팅에 대한 응답
     @MessageMapping("/chat/{id}")
-    public void sendMessage(@Payload Message message, @DestinationVariable("id") String id) {
-        Talk talk = talkService.TalkSave(message, id);
+    public void sendMessage(@Payload Message message, @Payload UserId userId, @DestinationVariable("id") String id) {
+        Talk talk = talkService.TalkSave(message, id, userId);
         talkService.convertMessage(message, talk);
         this.simpMessagingTemplate.convertAndSend("/queue/addChatToClient/" + id, message);
+        // 채팅방으로 해야지 두 유저 사이의 공유가 가능함. 수정 바람.
+        this.simpMessagingTemplate.convertAndSend("/queue/chatList/"+ id, message);
     }
 
     // 채팅방에 처음 들어갔을 때 정보를 대화 내용을 가져옴

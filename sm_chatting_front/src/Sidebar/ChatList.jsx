@@ -4,9 +4,10 @@ import Stomp from "stompjs";
 
 const ChatList = () => {
  const [msg, setMsg] = useState([]);
+ const [subMsg, setSubMsg] = useState({});
  const socket = new SockJS("http:/localhost:8031/chat/chatting");
  const client = Stomp.over(socket);
- const userId = "'" + localStorage.getItem("id") + "'";
+ const userId = localStorage.getItem("id");
 
  useEffect(() => {
   client.connect({}, () => {
@@ -14,17 +15,16 @@ const ChatList = () => {
    // client.send("/app/join", {} ,JSON.stringify(localStorage.getItem("Token")))
 
    // (초기 셋팅)처음 들어오면 DB에 있는 메시지를 추출함
-   client.send(`/app/chatRoomSetting/${userId}`, {});
+   client.send(`/app/chatRoomSetting/'${userId}'`, {});
 
-   client.subscribe(`/queue/chatRoomSetting/${userId}`, function (Message) {
-    // const newMsg = JSON.parse(Message.body).map((a) => a.content);
+   client.subscribe(`/queue/chatRoomSetting/'${userId}'`, function (Message) {
     const newMsg = JSON.parse(Message.body);
     setMsg(newMsg);
    });
 
-   client.subscribe("/queue/addChatToClient/'1'과'3'", function (Message) {
-    const newMsg = JSON.parse(Message.body).content;
-    setMsg(newMsg);
+   client.subscribe(`/queue/chatList/'1'과'2'`, function (Message) {
+    const newMsg = JSON.parse(Message.body);
+    setSubMsg(newMsg);
    });
   });
  }, []);
@@ -40,7 +40,7 @@ const ChatList = () => {
       <p>Angelina Jolie</p>
       <div className="flex items-center text-sm text-gray-600">
        <div className="min-w-0">
-        <p className="truncate">{_msg.content}</p>
+        <p className="truncate">{_msg.talkroom_id === subMsg.talkroom_id ? subMsg.content : _msg.content}</p>
        </div>
       </div>
      </div>
