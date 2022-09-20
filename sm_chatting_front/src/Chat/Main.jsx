@@ -1,7 +1,7 @@
 const Main = ({ msg, setMsg }) => {
   let userId = parseInt(localStorage.getItem("id"));
   return (
-    <div>
+    <>
       {msg.map((_msg, index) =>
         _msg.senduserid === userId ? (
           <div key={index} className="flex flex-row justify-end mt-1">
@@ -57,7 +57,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
           </div>
         )
       )}
-    </div>
+    </>
   );
 };
 

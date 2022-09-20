@@ -23,7 +23,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     }
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        // 채팅 클라이언트가 서버와 연결하웹소켓 셋팅 부분 ->웹소켓 연결 주소 -> /url/chatting
+        // 채팅 클라이언트가 서버와 연결, 웹소켓 셋팅 부분 -> 웹소켓 연결 주소 -> /url/chatting
         registry.addEndpoint("/chat/chatting").setAllowedOriginPatterns("*").withSockJS();
     }
 }

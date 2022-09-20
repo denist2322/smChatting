@@ -48,6 +48,11 @@ public class TalkService {
         message.setSenduserid(talk.getSenduserid());
     }
 
+    // 최신 채팅 내역 및 방을 가져온다.
+    public List<TalkSetting> getChatroomList(String id) {
+        return talkRepository.findByIdExsits(id);
+    }
+
     // 사이드바 이용을 위한 대화내용을 가져온다.
 //    public List<ChatRoomSetting> getChatroomList(String id) {
 //       return talkRepository.findByIdExsits(id);

@@ -3,50 +3,57 @@ import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 
 const ChatList = () => {
-  const [msg, setMsg] = useState("");
-  const socket = new SockJS("http:/localhost:8031/chat/chatting");
-  const client = Stomp.over(socket);
+ const [msg, setMsg] = useState([]);
+ const socket = new SockJS("http:/localhost:8031/chat/chatting");
+ const client = Stomp.over(socket);
+ const userId = "'" + localStorage.getItem("id") + "'";
 
-  useEffect(() => {
-    client.connect({}, () => {
-      // 연결시 jwt를 보냄
-      // client.send("/app/join", {} ,JSON.stringify(localStorage.getItem("Token")))
+ useEffect(() => {
+  client.connect({}, () => {
+   // 연결시 jwt를 보냄
+   // client.send("/app/join", {} ,JSON.stringify(localStorage.getItem("Token")))
 
-      // (초기 셋팅)처음 들어오면 DB에 있는 메시지를 추출함
-      client.send(`/app/first/'1'과'3'`, {}, JSON.stringify("success"));
+   // (초기 셋팅)처음 들어오면 DB에 있는 메시지를 추출함
+   client.send(`/app/chatRoomSetting/${userId}`, {});
 
-      client.subscribe("/queue/firstChat/'1'과'3'", function (Message) {
-        const newMsg = JSON.parse(Message.body).map((a) => a.content);
-        setMsg(newMsg);
-      });
+   client.subscribe(`/queue/chatRoomSetting/${userId}`, function (Message) {
+    // const newMsg = JSON.parse(Message.body).map((a) => a.content);
+    const newMsg = JSON.parse(Message.body);
+    setMsg(newMsg);
+   });
 
-      client.subscribe("/queue/addChatToClient/'1'과'3'", function (Message) {
-        const newMsg = JSON.parse(Message.body).content;
-        setMsg(newMsg);
-      });
-    });
-  }, []);
+   client.subscribe("/queue/addChatToClient/'1'과'3'", function (Message) {
+    const newMsg = JSON.parse(Message.body).content;
+    setMsg(newMsg);
+   });
+  });
+ }, []);
 
-  return (
-    <>
-      <div className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
-        <div className="w-16 h-16 relative flex flex-shrink-0">
-          <img
-            className="shadow-md rounded-full w-full h-full object-cover"
-            src="https://randomuser.me/api/portraits/women/61.jpg"
-            alt=""
-          />
-        </div>
-        <div className="flex-auto min-w-0 ml-4 mr-6 hidden md:block group-hover:block">
-          <p>Angelina Jolie</p>
-          <div className="flex items-center text-sm text-gray-600">
-            <div className="min-w-0">
-              <p className="truncate">{msg}</p>
-            </div>
-          </div>
-        </div>
+ return (
+  <>
+   {msg.map((_msg, index) => (
+    <div key={index} className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
+     <div className="w-16 h-16 relative flex flex-shrink-0">
+      <img className="shadow-md rounded-full w-full h-full object-cover" src="https://randomuser.me/api/portraits/women/61.jpg" alt="" />
+     </div>
+     <div className="flex-auto min-w-0 ml-4 mr-6 hidden md:block group-hover:block">
+      <p>Angelina Jolie</p>
+      <div className="flex items-center text-sm text-gray-600">
+       <div className="min-w-0">
+        <p className="truncate">{_msg.content}</p>
+       </div>
       </div>
-      <div className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
+     </div>
+    </div>
+   ))}
+  </>
+ );
+};
+
+export default ChatList;
+
+{
+ /* <div className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
         <div className="w-16 h-16 relative flex flex-shrink-0">
           <img
             className="shadow-md rounded-full w-full h-full object-cover"
@@ -108,9 +115,5 @@ const ChatList = () => {
             src="https://randomuser.me/api/portraits/women/23.jpg"
           />
         </div>
-      </div>
-    </>
-  );
-};
-
-export default ChatList;
+      </div> */
+}

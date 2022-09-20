@@ -7,10 +7,4 @@ public interface TalkSetting {
     String getContent();
     int getSenduserid();
     String getTalkroom_id();
-
-//    TalkroomId getTalkroom();
-//
-//    interface TalkroomId {
-//        String getId();
-//    }
 }

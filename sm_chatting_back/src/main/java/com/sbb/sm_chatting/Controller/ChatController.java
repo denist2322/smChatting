@@ -42,11 +42,11 @@ public class ChatController {
         this.simpMessagingTemplate.convertAndSend("/queue/firstChat/" + id, talkList);
     }
 
-    // 로그인한 유저가 소속된 채팅방 목록을 추출함
-//    @MessageMapping("/chatRoomSetting/{id}")
-//    public void chatRoomSetting(@DestinationVariable("id") String id){
-//        List<ChatRoomSetting> talkroomList = talkService.getChatroomList(id);
-//        this.simpMessagingTemplate.convertAndSend("/queue/chatRoomSetting/" + id, talkroomList);
-//    }
+    // 로그인한 유저가 소속된 각 채팅방의 제일 최신 채팅 한건씩을 가져옴
+    @MessageMapping("/chatRoomSetting/{id}")
+    public void chatRoomSetting(@DestinationVariable("id") String id){
+        List<TalkSetting> talkroomList = talkService.getChatroomList(id);
+        this.simpMessagingTemplate.convertAndSend("/queue/chatRoomSetting/" + id, talkroomList);
+    }
 
 }
