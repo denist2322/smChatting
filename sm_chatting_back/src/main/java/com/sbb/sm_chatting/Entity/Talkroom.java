@@ -19,5 +19,4 @@ public class Talkroom {
 
     @OneToMany (mappedBy = "talkroom", cascade = CascadeType.REMOVE)
     private List<Talk> talk;
-
 }

@@ -1,6 +1,5 @@
 package com.sbb.sm_chatting.Controller;
 
-import com.sbb.sm_chatting.DTO.ChatRoomSetting;
 import com.sbb.sm_chatting.DTO.Message;
 import com.sbb.sm_chatting.DTO.TalkSetting;
 import com.sbb.sm_chatting.Entity.Talk;
@@ -44,10 +43,10 @@ public class ChatController {
     }
 
     // 로그인한 유저가 소속된 채팅방 목록을 추출함
-    @MessageMapping("/chatRoomSetting/{id}")
-    public void chatRoomSetting(@DestinationVariable("id") String id){
-        List<ChatRoomSetting> talkroomList = talkService.getChatroomList(id);
-        this.simpMessagingTemplate.convertAndSend("/queue/chatRoomSetting/" + id, talkroomList);
-    }
+//    @MessageMapping("/chatRoomSetting/{id}")
+//    public void chatRoomSetting(@DestinationVariable("id") String id){
+//        List<ChatRoomSetting> talkroomList = talkService.getChatroomList(id);
+//        this.simpMessagingTemplate.convertAndSend("/queue/chatRoomSetting/" + id, talkroomList);
+//    }
 
 }

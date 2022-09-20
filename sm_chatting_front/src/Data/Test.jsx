@@ -1,12 +1,60 @@
-import base64 from 'base-64';
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
+import React, { useState, useEffect } from "react";
 
-const Test = () =>{
-      let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLrsJXshozrp50iLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiZW1haWwiOiJkZW5pc3QyM0BuYXZlci5jb20iLCJpZCI6MywiaWF0IjoxNjYzNDc0NzE1LCJleHAiOjE2NjM0NzY1MTV9.N4xjl-CARWTeRwBEJo_mZZB1u9PmERp507D-LfuiDn8";
-      let payload = token.substring(token.indexOf('.')+1,token.lastIndexOf('.')); 
-      let dec = JSON.parse(base64.decode(payload));
-      return(
-            <div>{dec.email}</div>
-      )
-} 
+const Test = () => {
+  const socket = new SockJS("http:/localhost:8031/chat/chatting");
+  const client = Stomp.over(socket);
+  const [msg, setMsg] = useState("");
+  const [content, setContent] = useState("");
+
+  const handleSubmit = (e, content) => {
+    e.preventDefault();
+    client.send(`/app/chat/'1'과'3'`, {}, JSON.stringify({ content }));
+    setContent("");
+  };
+
+  useEffect(() => {
+    client.connect({}, () => {
+      // 연결시 jwt를 보냄
+      // client.send("/app/join", {} ,JSON.stringify(localStorage.getItem("Token")))
+
+      // (초기 셋팅)처음 들어오면 DB에 있는 메시지를 추출함
+      client.send(`/app/first/'1'과'3'`, {}, JSON.stringify("success"));
+
+      client.subscribe("/queue/firstChat/'1'과'3'", function (Message) {
+        const newMsg = JSON.parse(Message.body).map((a) => a.content);
+        setMsg(newMsg);
+      });
+
+      client.subscribe("/queue/addChatToClient/'1'과'3'", function (Message) {
+        const newMsg = JSON.parse(Message.body).content;
+        setMsg(newMsg);
+      });
+    });
+  }, []);
+  return (
+    <div>
+      <div>채팅</div>
+      <form onSubmit={(e) => handleSubmit(e, content)}>
+        <div>
+          <input
+            type="text"
+            placeholder="내용을 입력하세요."
+            value={content}
+            onChange={(e) => {
+              setContent(e.target.value);
+            }}
+          />
+        </div>
+        <button type="submit">제출</button>
+        <div>내용</div>
+        <div>
+          <ul>{msg}</ul>
+        </div>
+      </form>
+    </div>
+  );
+};
 
 export default Test;

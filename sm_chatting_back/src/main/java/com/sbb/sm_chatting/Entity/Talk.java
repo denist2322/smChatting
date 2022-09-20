@@ -14,8 +14,8 @@ public class Talk {
     private LocalDateTime talkregdate;
     private String content;
     private int senduserid;
+
     @ManyToOne
     private Talkroom talkroom;
-
 
 }

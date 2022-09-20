@@ -1,6 +1,5 @@
 package com.sbb.sm_chatting.Service;
 
-import com.sbb.sm_chatting.DTO.ChatRoomSetting;
 import com.sbb.sm_chatting.DTO.Message;
 import com.sbb.sm_chatting.DTO.TalkSetting;
 import com.sbb.sm_chatting.Entity.Talk;
@@ -50,9 +49,9 @@ public class TalkService {
     }
 
     // 사이드바 이용을 위한 대화내용을 가져온다.
-    public List<ChatRoomSetting> getChatroomList(String id) {
-       return talkRepository.findByIdExsits(id);
-    }
+//    public List<ChatRoomSetting> getChatroomList(String id) {
+//       return talkRepository.findByIdExsits(id);
+//    }
 
 
 }

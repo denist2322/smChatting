@@ -4,6 +4,7 @@ import MessengerPage from "./Component/Messenger.jsx";
 import JoinPage from "./Component/JoinPage.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./Router/PrivateRoute.jsx";
+import Test from "./Data/Test.jsx";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<MainPage />}></Route>
         <Route path="/MessengerPage" element={<PrivateRoute component={<MessengerPage />} />}></Route>
         <Route path="/JoinPage" element={<JoinPage />}></Route>
+        <Route path="/Test" element={<Test />}></Route>
       </Routes>
     </Router>
 

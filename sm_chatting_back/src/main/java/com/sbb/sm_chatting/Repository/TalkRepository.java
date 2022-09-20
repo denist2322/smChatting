@@ -1,6 +1,5 @@
 package com.sbb.sm_chatting.Repository;
 
-import com.sbb.sm_chatting.DTO.ChatRoomSetting;
 import com.sbb.sm_chatting.DTO.TalkSetting;
 import com.sbb.sm_chatting.Entity.Talk;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,6 +13,6 @@ import java.util.List;
 public interface TalkRepository extends JpaRepository<Talk, Long> {
     List<TalkSetting> findByTalkroomId(String id);
 
-    @Query("select t from Talk t where t.talkroom.id = 1")
-    List<ChatRoomSetting> findByIdExsits(@Param("s") String s);
+    @Query(value = "select t from Talk t where t.talkroom.id like %:s%")
+    List<TalkSetting> findByIdExsits(@Param("s") String s);
 }
