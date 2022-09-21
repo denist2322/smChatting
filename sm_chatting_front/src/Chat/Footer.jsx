@@ -7,6 +7,8 @@ const footer = ({ client, content, setContent }) => {
   setContent("");
  };
 
+ const onChange = (e) => {};
+
  return (
   <form onSubmit={(e) => handleSubmit(e, content)}>
    <div className="flex flex-row items-center p-4">

@@ -10,7 +10,7 @@ const Test = () => {
 
  const handleSubmit = (e, content) => {
   e.preventDefault();
-  client.send(`/app/chat/'1'과'2'`, {}, JSON.stringify({ content, userId: "2" }));
+  client.send(`/app/chat/'1'과'3'`, {}, JSON.stringify({ content, userId: "3" }));
   setContent("");
  };
 
@@ -20,14 +20,14 @@ const Test = () => {
    // client.send("/app/join", {} ,JSON.stringify(localStorage.getItem("Token")))
 
    // (초기 셋팅)처음 들어오면 DB에 있는 메시지를 추출함
-   client.send(`/app/first/'1'과'2'`, {}, JSON.stringify("success"));
+   client.send(`/app/first/'1'과'3'`, {}, JSON.stringify("success"));
 
-   client.subscribe("/queue/firstChat/'1'과'2'", function (Message) {
+   client.subscribe("/queue/firstChat/'1'과'3'", function (Message) {
     const newMsg = JSON.parse(Message.body).map((a) => a.content);
     setMsg(newMsg);
    });
 
-   client.subscribe("/queue/chatList/'1'과'2'", function (Message) {
+   client.subscribe("/queue/chatList/'3'", function (Message) {
     const newMsg = JSON.parse(Message.body).content;
     setMsg(newMsg);
    });

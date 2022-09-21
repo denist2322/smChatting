@@ -3,8 +3,7 @@ import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 
 const ChatList = () => {
- const [msg, setMsg] = useState([]);
- const [subMsg, setSubMsg] = useState({});
+ const [msgC, setMsgC] = useState([]);
  const socket = new SockJS("http:/localhost:8031/chat/chatting");
  const client = Stomp.over(socket);
  const userId = localStorage.getItem("id");
@@ -19,19 +18,22 @@ const ChatList = () => {
 
    client.subscribe(`/queue/chatRoomSetting/'${userId}'`, function (Message) {
     const newMsg = JSON.parse(Message.body);
-    setMsg(newMsg);
+    setMsgC(newMsg);
    });
 
-   client.subscribe(`/queue/chatList/'1'과'2'`, function (Message) {
+   client.subscribe(`/queue/chatList/'${userId}'`, function (Message) {
     const newMsg = JSON.parse(Message.body);
-    setSubMsg(newMsg);
+    // 이전 메시지(prev) 를 가져와 새로 도착한 메시지만 출력해서 저장함.
+    setMsgC((prev) =>
+     [...prev].map((_msg) => (_msg.talkroom_id === newMsg.talkroom_id ? { ..._msg, content: newMsg.content, regdate: newMsg.regdate } : _msg))
+    );
    });
   });
  }, []);
 
  return (
   <>
-   {msg.map((_msg, index) => (
+   {msgC.map((_msg, index) => (
     <div key={index} className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
      <div className="w-16 h-16 relative flex flex-shrink-0">
       <img className="shadow-md rounded-full w-full h-full object-cover" src="https://randomuser.me/api/portraits/women/61.jpg" alt="" />
@@ -40,7 +42,7 @@ const ChatList = () => {
       <p>Angelina Jolie</p>
       <div className="flex items-center text-sm text-gray-600">
        <div className="min-w-0">
-        <p className="truncate">{_msg.talkroom_id === subMsg.talkroom_id ? subMsg.content : _msg.content}</p>
+        <p className="truncate">{_msg.content}</p>
        </div>
       </div>
      </div>

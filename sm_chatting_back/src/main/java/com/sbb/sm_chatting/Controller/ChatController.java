@@ -34,7 +34,11 @@ public class ChatController {
         talkService.convertMessage(message, talk);
         this.simpMessagingTemplate.convertAndSend("/queue/addChatToClient/" + id, message);
         // 채팅방으로 해야지 두 유저 사이의 공유가 가능함. 수정 바람.
-        this.simpMessagingTemplate.convertAndSend("/queue/chatList/"+ id, message);
+        String[] s = id.split("과");
+        for(String tmp : s){
+            this.simpMessagingTemplate.convertAndSend("/queue/chatList/"+ tmp, message);
+        }
+
     }
 
     // 채팅방에 처음 들어갔을 때 정보를 대화 내용을 가져옴
