@@ -1,40 +1,19 @@
-import React, { useEffect, useState } from "react";
-import SockJS from "sockjs-client";
-import Stomp from "stompjs";
-
-const ChatList = () => {
- const [msgC, setMsgC] = useState([]);
- const socket = new SockJS("http:/localhost:8031/chat/chatting");
- const client = Stomp.over(socket);
- const userId = localStorage.getItem("id");
-
- useEffect(() => {
-  client.connect({}, () => {
-   // 연결시 jwt를 보냄
-   // client.send("/app/join", {} ,JSON.stringify(localStorage.getItem("Token")))
-
-   // (초기 셋팅)처음 들어오면 DB에 있는 메시지를 추출함
-   client.send(`/app/chatRoomSetting/'${userId}'`, {});
-
-   client.subscribe(`/queue/chatRoomSetting/'${userId}'`, function (Message) {
-    const newMsg = JSON.parse(Message.body);
-    setMsgC(newMsg);
-   });
-
-   client.subscribe(`/queue/chatList/'${userId}'`, function (Message) {
-    const newMsg = JSON.parse(Message.body);
-    // 이전 메시지(prev) 를 가져와 새로 도착한 메시지만 출력해서 저장함.
-    setMsgC((prev) =>
-     [...prev].map((_msg) => (_msg.talkroom_id === newMsg.talkroom_id ? { ..._msg, content: newMsg.content, regdate: newMsg.regdate } : _msg))
-    );
-   });
-  });
- }, []);
+const ChatList = ({ listMsg, setChatRoomId, client }) => {
+ const changeChatRoomId = (id) => {
+  client.send(`/app/first/${id}`, {});
+  setChatRoomId(id);
+ };
 
  return (
   <>
-   {msgC.map((_msg, index) => (
-    <div key={index} className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
+   {listMsg.map((_msg, index) => (
+    <div
+     key={index}
+     className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative"
+     onClick={() => {
+      changeChatRoomId(_msg.talkroom_id);
+     }}
+    >
      <div className="w-16 h-16 relative flex flex-shrink-0">
       <img className="shadow-md rounded-full w-full h-full object-cover" src="https://randomuser.me/api/portraits/women/61.jpg" alt="" />
      </div>

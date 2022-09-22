@@ -3,11 +3,13 @@ const footer = ({ client, content, setContent }) => {
  // 메시지 제출
  const handleSubmit = (e, content) => {
   e.preventDefault();
-  client.send(`/app/chat/'1'과'2'`, {}, JSON.stringify({ content, userId }));
-  setContent("");
- };
 
- const onChange = (e) => {};
+  // 내용이 없으면 전송이 불가능하다.
+  if (content.trim().length != 0) {
+   client.send(`/app/chat/'1'과'2'`, {}, JSON.stringify({ content, userId }));
+   setContent("");
+  }
+ };
 
  return (
   <form onSubmit={(e) => handleSubmit(e, content)}>

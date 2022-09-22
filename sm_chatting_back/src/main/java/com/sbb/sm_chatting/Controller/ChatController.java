@@ -44,6 +44,7 @@ public class ChatController {
     // 채팅방에 처음 들어갔을 때 정보를 대화 내용을 가져옴
     @MessageMapping("/first/{id}")
     public void firstSetting(@DestinationVariable("id") String id) {
+        System.out.println(id);
         List<TalkSetting> talkList = talkService.talkList(id);
         this.simpMessagingTemplate.convertAndSend("/queue/firstChat/" + id, talkList);
     }
