@@ -1,12 +1,14 @@
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import React, { useState, useEffect } from "react";
+import Modal from "../Component/Modal/UserModal.jsx";
 
 const Test = () => {
  const socket = new SockJS("http:/localhost:8031/chat/chatting");
  const client = Stomp.over(socket);
  const [msg, setMsg] = useState("");
  const [content, setContent] = useState("");
+ const [userModal, setUserModal] = useState("False");
 
  const handleSubmit = (e, content) => {
   e.preventDefault();
@@ -33,27 +35,40 @@ const Test = () => {
    });
   });
  }, []);
+
  return (
-  <div>
-   <div>채팅</div>
-   <form onSubmit={(e) => handleSubmit(e, content)}>
-    <div>
-     <input
-      type="text"
-      placeholder="내용을 입력하세요."
-      value={content}
-      onChange={(e) => {
-       setContent(e.target.value);
-      }}
-     />
-    </div>
-    <button type="submit">제출</button>
-    <div>내용</div>
-    <div>
-     <ul>{msg}</ul>
-    </div>
-   </form>
-  </div>
+  <>
+   <div>
+    <div>채팅</div>
+    <form onSubmit={(e) => handleSubmit(e, content)}>
+     <div>
+      <input
+       type="text"
+       placeholder="내용을 입력하세요."
+       value={content}
+       onChange={(e) => {
+        setContent(e.target.value);
+       }}
+      />
+     </div>
+     <button type="submit">제출</button>
+     <div>내용</div>
+     <div>
+      <ul>{msg}</ul>
+     </div>
+    </form>
+   </div>
+   {userModal == "True" ? <Modal setUserModal={setUserModal} /> : null}
+   <button
+    type="button"
+    onClick={() => {
+     userModal == "False" ? setUserModal("True") : setUserModal("False");
+    }}
+    className="text-xl"
+   >
+    모달
+   </button>
+  </>
  );
 };
 

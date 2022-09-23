@@ -3,7 +3,7 @@ import SearchUser from "../Sidebar/SearchUser.jsx";
 import ChatList from "../Sidebar/ChatList";
 import Users from "../Sidebar/Users.jsx";
 
-const Sidebar = ({ listMsg, chatRoomId, setChatRoomId, client }) => {
+const Sidebar = ({ listMsg, setChatRoomId }) => {
  return (
   <section className="flex flex-col flex-none overflow-auto w-24 hover:w-64 group lg:max-w-sm md:w-2/5 transition-all duration-300 ease-in-out">
    <div className="header p-4 flex flex-row justify-between items-center flex-none shadow">{<SideHeader />}</div>
