@@ -1,4 +1,4 @@
-const Main = ({ chatMsg, setChatMsg }) => {
+const Main = ({ chatMsg }) => {
  let userId = parseInt(localStorage.getItem("id"));
  return (
   <>

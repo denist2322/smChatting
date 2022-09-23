@@ -1,40 +1,38 @@
-const ChatList = ({ listMsg, chatRoomId, setChatRoomId, client }) => {
-  const changeChatRoomId = (id) => {
-    client.send(`/app/first/${id}`, {}, JSON.stringify("success"));
-    setChatRoomId(id);
-  };
-
-  return (
-    <>
-      {listMsg.map((_msg, index) => (
-        <div
-          key={index}
-          className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative"
-          onClick={() => {
-            changeChatRoomId(_msg.talkroom_id);
-          }}
-        >
-          <div className="w-16 h-16 relative flex flex-shrink-0">
-            <img className="shadow-md rounded-full w-full h-full object-cover" src="https://randomuser.me/api/portraits/women/61.jpg" alt="" />
-          </div>
-          <div className="flex-auto min-w-0 ml-4 mr-6 hidden md:block group-hover:block">
-            <p>Angelina Jolie</p>
-            <div className="flex items-center text-sm text-gray-600">
-              <div className="min-w-0">
-                <p className="truncate">{_msg.content}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
-    </>
-  );
+const ChatList = ({ listMsg, setChatRoomId }) => {
+ const changeChatRoomId = (id) => {
+  setChatRoomId(id);
+ };
+ return (
+  <>
+   {listMsg.map((_msg, index) => (
+    <div
+     key={index}
+     className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative"
+     onClick={() => {
+      changeChatRoomId(_msg.talkroom_id);
+     }}
+    >
+     <div className="w-16 h-16 relative flex flex-shrink-0">
+      <img className="shadow-md rounded-full w-full h-full object-cover" src="https://randomuser.me/api/portraits/women/61.jpg" alt="" />
+     </div>
+     <div className="flex-auto min-w-0 ml-4 mr-6 hidden md:block group-hover:block">
+      <p>Angelina Jolie</p>
+      <div className="flex items-center text-sm text-gray-600">
+       <div className="min-w-0">
+        <p className="truncate">{_msg.content}</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   ))}
+  </>
+ );
 };
 
 export default ChatList;
 
 {
-  /* <div className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
+ /* <div className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
         <div className="w-16 h-16 relative flex flex-shrink-0">
           <img
             className="shadow-md rounded-full w-full h-full object-cover"
