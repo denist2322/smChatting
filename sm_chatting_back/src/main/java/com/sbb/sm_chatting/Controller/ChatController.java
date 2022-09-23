@@ -4,7 +4,6 @@ import com.sbb.sm_chatting.DTO.Message;
 import com.sbb.sm_chatting.DTO.TalkSetting;
 import com.sbb.sm_chatting.DTO.UserId;
 import com.sbb.sm_chatting.Entity.Talk;
-import com.sbb.sm_chatting.Service.TalkRoomService;
 import com.sbb.sm_chatting.Service.TalkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -25,8 +24,6 @@ public class ChatController {
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final TalkService talkService;
 
-    private final TalkRoomService talkRoomService;
-
     // 실시간 채팅에 대한 응답
     @MessageMapping("/chat/{id}")
     public void sendMessage(@Payload Message message, @Payload UserId userId, @DestinationVariable("id") String id) {
@@ -44,7 +41,6 @@ public class ChatController {
     // 채팅방에 처음 들어갔을 때 정보를 대화 내용을 가져옴
     @MessageMapping("/first/{id}")
     public void firstSetting(@DestinationVariable("id") String id) {
-        System.out.println(id);
         List<TalkSetting> talkList = talkService.talkList(id);
         this.simpMessagingTemplate.convertAndSend("/queue/firstChat/" + id, talkList);
     }
