@@ -65,29 +65,15 @@ public class UserService {
 
 
     public String doJoin(Map<String, String> user) {
-        // 회원가입 진행시 값이 공백일 경우 (입력값이 없을경우 각 if문에 들어가게 된다.)
-        if (user.get("userEmail") == "") {
-            return "noEmail";
-        }
-
         if (userRepository.existsByUseremail(user.get("userEmail"))) {
             return "existEmail";
         }
-
-        if (user.get("userName") == "") {
-            return "noName";
-        }
-
-        if (user.get("userPassword") == "" || user.get("passwordComfirm") == "") {
-            return "noPassword";
-        }
-
-        if (!user.get("userPassword").equals(user.get("passwordComfirm"))) {
-            return "notMatch";
-        }
-
         join(user);
 
         return "success";
     }
+
+//    public List<User> getFriendList(String id) {
+//        userRepository.findBy
+//    }
 }

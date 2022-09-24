@@ -70,7 +70,7 @@ const Messenger = () => {
   <div className="h-screen w-full flex antialiased text-gray-200 bg-gray-900 overflow-hidden" onLoad={isLogined}>
    <div className="flex-1 flex flex-col">
     <main className="flex-grow flex flex-row min-h-0">
-     <Sidebar listMsg={listMsg} chatRoomId={chatRoomId} setChatRoomId={setChatRoomId} client={client} />
+     <Sidebar listMsg={listMsg} chatRoomId={chatRoomId} setChatRoomId={setChatRoomId} client={client} userId={userId} />
      <Chat chatMsg={chatMsg} setchatMsg={setchatMsg} client={client} content={content} setContent={setContent} chatRoomId={chatRoomId} />
     </main>
    </div>

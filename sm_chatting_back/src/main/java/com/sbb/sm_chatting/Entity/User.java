@@ -30,4 +30,7 @@ public class User {
         }
         return new ArrayList<>();
     }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Friend> friendList;
 }
