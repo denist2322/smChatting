@@ -22,4 +22,12 @@ public class FriendController {
     public List<FriendSetting> getFriendList(@RequestBody Map<String, String> myid){
         return friendService.getFriendList(myid);
     }
+
+    @PostMapping("delFriend")
+    @ResponseBody
+    public String delFriend(@RequestBody Map<String, String> info){
+        System.out.println("컨트롤러 왔음");
+        friendService.delFriend(info);
+        return "success";
+    }
 }

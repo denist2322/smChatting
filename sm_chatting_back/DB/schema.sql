@@ -33,6 +33,15 @@ INSERT INTO `user` SET
 
 UPDATE `user` SET userrole = "ROLE_USER" WHERE useremail = "test@test.com";
 
+INSERT INTO `user` SET
+   userregdate = NOW(),
+   userupdatedate = NOW(),
+   useremail = "test2@test.com",
+   userpassword = "12344",
+   username = "테스트 유저2";
+
+UPDATE `user` SET userrole = "ROLE_USER" WHERE useremail = "test2@test.com";
+
 
 CREATE TABLE `talk`(
    id BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -75,6 +84,20 @@ INSERT INTO talkroom SET
 INSERT INTO talkroom SET
  id = "'1'과'3'";
 
+CREATE TABLE `friend`(
+   id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   myid INT UNSIGNED NOT NULL,
+   user_id INT UNSIGNED NOT NULL
+);
+
+INSERT INTO friend SET
+myid = 1,
+user_id = 2;
+
+INSERT INTO friend SET
+myid = 1,
+user_id = 3;
+
 SELECT * FROM talkroom;
 SELECT * FROM `user`;
 SELECT * FROM `talk`;
@@ -87,6 +110,7 @@ SELECT * FROM talkroom WHERE id LIKE "%'3'%";
 
 SELECT * FROM `talk` WHERE talkroom_id LIKE "%'1'%" GROUP BY talkroom_id;
 
+SELECT * FROM friend;
 
 SELECT * FROM talk
 
@@ -96,6 +120,10 @@ SELECT * FROM (
      LIMIT 18446744073709551615
     ) a
     GROUP BY talkroom_id
+
+SELECT * FROM talk UNION SELECT * FROM `user`;
+
+SELECT * FROM Friend f WHERE f.myid = 1 AND f.user_id = 2;
 
 
 

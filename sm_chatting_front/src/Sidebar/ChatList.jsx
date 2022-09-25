@@ -7,19 +7,19 @@ const ChatList = ({ listMsg, setChatRoomId }) => {
    {listMsg.map((_msg, index) => (
     <div
      key={index}
-     className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative"
+     className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg"
      onClick={() => {
-      changeChatRoomId(_msg.talkroom_id);
+      changeChatRoomId(_msg.talkSetting.talkroom_id);
      }}
     >
-     <div className="w-16 h-16 relative flex flex-shrink-0">
+     <div className="w-16 h-16 flex flex-shrink-0">
       <img className="shadow-md rounded-full w-full h-full object-cover" src="https://randomuser.me/api/portraits/women/61.jpg" alt="" />
      </div>
      <div className="flex-auto min-w-0 ml-4 mr-6 hidden md:block group-hover:block">
-      <p>Angelina Jolie</p>
+      <p>{_msg.userInfo.username}</p>
       <div className="flex items-center text-sm text-gray-600">
        <div className="min-w-0">
-        <p className="truncate">{_msg.content}</p>
+        <p className="truncate">{_msg.talkSetting.content}</p>
        </div>
       </div>
      </div>

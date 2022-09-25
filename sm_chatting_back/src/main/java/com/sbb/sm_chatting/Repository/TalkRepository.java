@@ -21,4 +21,5 @@ public interface TalkRepository extends JpaRepository<Talk, Long> {
             "    ) a" +
             "    GROUP BY talkroom_id" , nativeQuery=true)
     List<TalkSetting> findByIdExsits(@Param("s") String s);
+
 }

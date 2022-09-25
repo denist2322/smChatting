@@ -26,7 +26,7 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
      </div>
     ) : (
      <div key={index} className="flex flex-row justify-start mt-1">
-      <div className="w-8 h-8 relative flex flex-shrink-0 mr-4">
+      <div className="w-8 h-8 flex flex-shrink-0 mr-4">
        <img className="shadow-md rounded-full w-full h-full object-cover" src="https://randomuser.me/api/portraits/women/33.jpg" alt="" />
       </div>
       <div className="messages text-sm text-gray-700 grid grid-flow-row gap-2">

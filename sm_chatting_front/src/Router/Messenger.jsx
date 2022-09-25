@@ -15,6 +15,7 @@ const Messenger = () => {
  // 입력된 대화 내용
  const [content, setContent] = useState("");
  const [chatRoomId, setChatRoomId] = useState("");
+ const [active, setActive] = useState("");
  // 로그인 되어 있는지 체크한다.
  const isLogined = async (e) => {
   if (localStorage.getItem("Token") === null) {
@@ -70,7 +71,7 @@ const Messenger = () => {
   <div className="h-screen w-full flex antialiased text-gray-200 bg-gray-900 overflow-hidden" onLoad={isLogined}>
    <div className="flex-1 flex flex-col">
     <main className="flex-grow flex flex-row min-h-0">
-     <Sidebar listMsg={listMsg} chatRoomId={chatRoomId} setChatRoomId={setChatRoomId} client={client} userId={userId} />
+     <Sidebar listMsg={listMsg} chatRoomId={chatRoomId} setChatRoomId={setChatRoomId} client={client} userId={userId} setActive={setActive} />
      <Chat chatMsg={chatMsg} setchatMsg={setchatMsg} client={client} content={content} setContent={setContent} chatRoomId={chatRoomId} />
     </main>
    </div>

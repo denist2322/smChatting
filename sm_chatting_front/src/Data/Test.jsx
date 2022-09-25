@@ -8,7 +8,7 @@ const Test = () => {
  const client = Stomp.over(socket);
  const [msg, setMsg] = useState("");
  const [content, setContent] = useState("");
- const [userModal, setUserModal] = useState("False");
+ const [auserModal, setAuserModal] = useState("False");
 
  const handleSubmit = (e, content) => {
   e.preventDefault();
@@ -58,11 +58,11 @@ const Test = () => {
      </div>
     </form>
    </div>
-   {userModal == "True" ? <Modal setUserModal={setUserModal} /> : null}
+   {auserModal == "True" ? <Modal setAuserModal={setAuserModal} /> : null}
    <button
     type="button"
     onClick={() => {
-     userModal == "False" ? setUserModal("True") : setUserModal("False");
+     auserModal == "False" ? setAuserModal("True") : setAuserModal("False");
     }}
     className="text-xl"
    >

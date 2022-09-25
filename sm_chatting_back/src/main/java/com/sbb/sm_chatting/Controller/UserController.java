@@ -33,7 +33,8 @@ public class UserController {
     public String join(@RequestBody Map<String, String> user){
         // 회원가입에 따른 서비스로부터 받은 성공/오류메시지를 넘긴다.
         return userService.doJoin(user);
-
     }
+
+
 
 }

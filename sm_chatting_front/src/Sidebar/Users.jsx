@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-const Users = ({ userId }) => {
+import Modal from "../Component/Modal/UserModal.jsx";
+const Users = ({ userId, setActive }) => {
  // 친구목록을 받을거다.
  const [friend, setFriend] = useState([]);
+ const [userModal, setUserModal] = useState("False");
+ // 삭제 동작이 일어나면 발생
+ const [delActive, setDelActive] = useState("");
  // 친구를 추가하면 재실행 해야 한다.
  useEffect(() => {
   const userList = async () => {
@@ -14,10 +18,12 @@ const Users = ({ userId }) => {
     },
    });
    setFriend(userData.data);
+   // user{ id, useremail, username }
   };
   // 함수를 실행해야 작동함.
   userList();
- }, []);
+ }, [delActive]);
+
  return (
   <>
    <div className="text-sm text-center mr-4">
@@ -29,13 +35,19 @@ const Users = ({ userId }) => {
     <p>Your Story</p>
    </div>
    {friend.map((_friend, index) => (
-    <div key={index} className="text-sm text-center mr-4">
-     <div className="p-1 border-4 border-blue-600 rounded-full">
-      <div className="w-16 h-16 relative flex flex-shrink-0">
+    <div key={index} className="text-sm text-center mr-4 ">
+     <div
+      className="p-1 border-4 border-blue-600 rounded-full cursor-pointer"
+      onClick={() => {
+       setUserModal(_friend.user.id + "True");
+      }}
+     >
+      <div className="w-16 h-16 flex flex-shrink-0">
        <img className="shadow-md rounded-full w-full h-full object-cover" src="https://randomuser.me/api/portraits/women/12.jpg" alt="" />
       </div>
      </div>
      <p>{_friend.user.username}</p>
+     {userModal === _friend.user.id + "True" ? <Modal setUserModal={setUserModal} friend={_friend} userId={userId} setDelActive={setDelActive} /> : null}
     </div>
    ))}
   </>
