@@ -3,7 +3,7 @@ const Main = ({ chatMsg }) => {
  return (
   <>
    {chatMsg.map((_msg, index) =>
-    _msg.senduserid === userId ? (
+    _msg.senduserid === 0 ? null : _msg.senduserid === userId ? (
      <div key={index} className="flex flex-row justify-end mt-1">
       <div className="messages text-sm text-white grid grid-flow-row gap-2">
        <div className="flex items-center flex-row-reverse group">

@@ -1,7 +1,8 @@
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import React, { useState, useEffect } from "react";
-import Modal from "../Component/Modal/UserModal.jsx";
+// import Modal from "../Component/Modal/UserModal.jsx";
+import Modal from "../Component/Modal/alertModal.jsx";
 
 const Test = () => {
  const socket = new SockJS("http:/localhost:8031/chat/chatting");

@@ -75,7 +75,7 @@ const UserModal = ({ setChatRoomId, setUserModal, friend, userId, setActive, sea
   });
   if (addTalkroom.data != null) {
    closeModal();
-   setChatRoomId(addTalkroom.data);
+   setChatRoomId((prev) => [...prev, addTalkroom.data]);
   }
  };
 

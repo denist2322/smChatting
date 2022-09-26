@@ -14,7 +14,7 @@ const Messenger = () => {
  const [listMsg, setListMsg] = useState([]);
  // 입력된 대화 내용
  const [content, setContent] = useState("");
- const [chatRoomId, setChatRoomId] = useState("");
+ const [chatRoomId, setChatRoomId] = useState([]);
  const [active, setActive] = useState("");
  // 로그인 되어 있는지 체크한다.
  const isLogined = async (e) => {
@@ -29,27 +29,30 @@ const Messenger = () => {
  const userId = localStorage.getItem("id");
 
  useEffect(() => {
-  // 새로 쓸때 input은 아무것도 없어야함.
-  setContent("");
+  setContent(""); // 새로 쓸때 input은 아무것도 없어야함.
+  // if(chatRoomId.indexOf) if문으로 chatroomid가 이미 있다면 연결을 하지 않는다.
+  // 연결이 되어 있지 않다고 해도 send는 한번 보내주어야한다. 때문에 else도 사용
+  // 물론 2번만 해당되고 1번은 무조건 한번만 연결이 된다.
   client.connect({}, () => {
-   // === 1. 채팅방 셋팅 (send를 통해 웹소캣 연결) ===
-   client.send(`/app/chatRoomSetting/'${userId}'`, {});
-   // 1-1. 1연결로 얻은 값
-   client.subscribe(`/queue/chatRoomSetting/'${userId}'`, function (Message) {
-    const newMsg = JSON.parse(Message.body);
-    setListMsg(newMsg);
-   });
-   // 1-2. 채팅방 최신 메시지를 받으면 미리보기로 출력함
-   client.subscribe(`/queue/chatList/'${userId}'`, function (Message) {
-    const newMsg = JSON.parse(Message.body);
-    // 이전 메시지(prev) 를 가져와 새로 도착한 메시지만 출력해서 저장함.
-    setListMsg((prev) =>
-     [...prev].map((_msg) => (_msg.talkroom_id === newMsg.talkroom_id ? { ..._msg, content: newMsg.content, regdate: newMsg.regdate } : _msg))
-    );
-   });
-
+   if (chatRoomId.length === 0) {
+    // === 1. 채팅방 셋팅 (send를 통해 웹소캣 연결) ===
+    client.send(`/app/chatRoomSetting/'${userId}'`, {});
+    // 1-1. 1연결로 얻은 값
+    client.subscribe(`/queue/chatRoomSetting/'${userId}'`, function (Message) {
+     const newMsg = JSON.parse(Message.body);
+     setListMsg(newMsg);
+    });
+    // 1-2. 채팅방 최신 메시지를 받으면 미리보기로 출력함
+    client.subscribe(`/queue/chatList/'${userId}'`, function (Message) {
+     const newMsg = JSON.parse(Message.body);
+     // 이전 메시지(prev) 를 가져와 새로 도착한 메시지만 출력해서 저장함.
+     setListMsg((prev) =>
+      [...prev].map((_msg) => (_msg.talkroom_id === newMsg.talkroom_id ? { ..._msg, content: newMsg.content, regdate: newMsg.regdate } : _msg))
+     );
+    });
+   }
    // === 2. 대화내용 셋팅 (send는 사이드바 채팅방을 누르면 실행됨.) ===
-   client.send(`/app/first/${chatRoomId}`, {}, JSON.stringify("success"));
+   client.send(`/app/first/${chatRoomId}`, {});
 
    client.subscribe(`/queue/firstChat/${chatRoomId}`, function (Message) {
     const newMsg = JSON.parse(Message.body);
@@ -61,7 +64,8 @@ const Messenger = () => {
     setchatMsg((prev) => [...prev, newMsg]);
    });
   });
-  // 채팅방이 생성되면 새로 연결이 필요함. ([]에 내용추가) - 아직 미 구현
+
+  // 채팅방이 생성되면 새로 연결이 필요함. ([]에 내용추가)
  }, [chatRoomId]);
 
  return (

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UserModal from "../Component/Modal/UserModal";
+import AlertModal from "../Component/Modal/alertModal";
 const SearchUser = ({ userId, active, setActive, setChatRoomId }) => {
  const [search, setSearch] = useState("");
  const [searchUserInfo, setSearchUserInfo] = useState("");
  const [searchModal, setSearchModal] = useState("False");
+ const [onOffAlert, setOnOffAlert] = useState("False");
  // 유저를 찾는다.
  const searchSubmit = async (e, search) => {
   e.preventDefault();
@@ -17,10 +19,12 @@ const SearchUser = ({ userId, active, setActive, setChatRoomId }) => {
   });
   console.log(searchUser.data);
   if (searchUser.data.length === 0) {
-   alert("해당이메일의 유저가 존재하지 않습니다.");
+   setOnOffAlert("True");
+   setSearch("");
   } else {
    setSearchUserInfo(searchUser.data);
    setSearchModal("True");
+   setSearch("");
   }
  };
  return (
@@ -46,6 +50,7 @@ const SearchUser = ({ userId, active, setActive, setChatRoomId }) => {
    {searchModal === "True" ? (
     <UserModal searchUserInfo={searchUserInfo} setSearchModal={setSearchModal} userId={userId} setActive={setActive} setChatRoomId={setChatRoomId} />
    ) : null}
+   {onOffAlert === "True" ? <AlertModal onOff={setOnOffAlert} content={"해당이메일의 유저가 존재하지 않습니다."} /> : null}
   </form>
  );
 };
