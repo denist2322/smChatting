@@ -15,4 +15,6 @@ public interface FriendRepository extends JpaRepository<Friend, Long> {
 
     @Query(value = "SELECT * FROM Friend f WHERE (f.myid = :myid AND f.user_id = :user_id);", nativeQuery = true)
     Friend findByMyidUserId(@Param("myid") Long myid, @Param("user_id") Long user_id);
+
+    boolean existsByMyidAndUserId(long myid, long otherOne);
 }

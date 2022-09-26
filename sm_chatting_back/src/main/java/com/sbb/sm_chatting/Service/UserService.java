@@ -74,8 +74,16 @@ public class UserService {
         return "success";
     }
 
-    public UserInfo findId(long opponentId) {
-        return userRepository.findId(opponentId);
+    public UserInfo findId(long otherOne) {
+        return userRepository.findId(otherOne);
     }
 
+    public User getUserById (long otherOne) {
+        return userRepository.findById(otherOne).get();
+    }
+
+    public UserInfo searchUser(Map<String, String> user) {
+        System.out.println(">>>>>>>>>>>>> " + user.get("search"));
+        return userRepository.findUseremail(user.get("search"));
+    }
 }

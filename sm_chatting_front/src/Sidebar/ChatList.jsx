@@ -1,4 +1,4 @@
-const ChatList = ({ listMsg, setChatRoomId }) => {
+const ChatList = ({ listMsg, setChatRoomId}) => {
  const changeChatRoomId = (id) => {
   setChatRoomId(id);
  };
@@ -7,15 +7,15 @@ const ChatList = ({ listMsg, setChatRoomId }) => {
    {listMsg.map((_msg, index) => (
     <div
      key={index}
-     className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg"
+     className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-800"
      onClick={() => {
       changeChatRoomId(_msg.talkSetting.talkroom_id);
      }}
     >
-     <div className="w-16 h-16 flex flex-shrink-0">
-      <img className="shadow-md rounded-full w-full h-full object-cover" src="https://randomuser.me/api/portraits/women/61.jpg" alt="" />
+     <div className="flex flex-shrink-0 w-16 h-16">
+      <img className="object-cover w-full h-full rounded-full shadow-md" src="https://randomuser.me/api/portraits/women/61.jpg" alt="" />
      </div>
-     <div className="flex-auto min-w-0 ml-4 mr-6 hidden md:block group-hover:block">
+     <div className="flex-auto hidden min-w-0 ml-4 mr-6 md:block group-hover:block">
       <p>{_msg.userInfo.username}</p>
       <div className="flex items-center text-sm text-gray-600">
        <div className="min-w-0">
@@ -32,18 +32,18 @@ const ChatList = ({ listMsg, setChatRoomId }) => {
 export default ChatList;
 
 {
- /* <div className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
-        <div className="w-16 h-16 relative flex flex-shrink-0">
+ /* <div className="relative flex items-center justify-between p-3 rounded-lg hover:bg-gray-800">
+        <div className="relative flex flex-shrink-0 w-16 h-16">
           <img
-            className="shadow-md rounded-full w-full h-full object-cover"
+            className="object-cover w-full h-full rounded-full shadow-md"
             src="https://randomuser.me/api/portraits/men/97.jpg"
             alt=""
           />
-          <div className="absolute bg-gray-900 p-1 rounded-full bottom-0 right-0">
-            <div className="bg-green-500 rounded-full w-3 h-3"></div>
+          <div className="absolute bottom-0 right-0 p-1 bg-gray-900 rounded-full">
+            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
           </div>
         </div>
-        <div className="flex-auto min-w-0 ml-4 mr-6 hidden md:block group-hover:block">
+        <div className="flex-auto hidden min-w-0 ml-4 mr-6 md:block group-hover:block">
           <p className="font-bold">Tony Stark</p>
           <div className="flex items-center text-sm font-bold">
             <div className="min-w-0">
@@ -51,17 +51,17 @@ export default ChatList;
             </div>
           </div>
         </div>
-        <div className="bg-blue-700 w-3 h-3 rounded-full flex flex-shrink-0 hidden md:block group-hover:block"></div>
+        <div className="flex flex-shrink-0 hidden w-3 h-3 bg-blue-700 rounded-full md:block group-hover:block"></div>
       </div>
-      <div className="flex justify-between items-center p-3 bg-gray-800 rounded-lg relative">
-        <div className="w-16 h-16 relative flex flex-shrink-0">
+      <div className="relative flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+        <div className="relative flex flex-shrink-0 w-16 h-16">
           <img
-            className="shadow-md rounded-full w-full h-full object-cover"
+            className="object-cover w-full h-full rounded-full shadow-md"
             src="https://randomuser.me/api/portraits/women/33.jpg"
             alt=""
           />
         </div>
-        <div className="flex-auto min-w-0 ml-4 mr-6 hidden md:block group-hover:block">
+        <div className="flex-auto hidden min-w-0 ml-4 mr-6 md:block group-hover:block">
           <p>Scarlett Johansson</p>
           <div className="flex items-center text-sm text-gray-600">
             <div className="min-w-0">
@@ -71,15 +71,15 @@ export default ChatList;
         </div>
       </div>
 
-      <div className="flex justify-between items-center p-3 hover:bg-gray-800 rounded-lg relative">
-        <div className="w-16 h-16 relative flex flex-shrink-0">
+      <div className="relative flex items-center justify-between p-3 rounded-lg hover:bg-gray-800">
+        <div className="relative flex flex-shrink-0 w-16 h-16">
           <img
-            className="shadow-md rounded-full w-full h-full object-cover"
+            className="object-cover w-full h-full rounded-full shadow-md"
             src="https://randomuser.me/api/portraits/women/23.jpg"
             alt="User2"
           />
         </div>
-        <div className="flex-auto min-w-0 ml-4 mr-6 hidden md:block group-hover:block">
+        <div className="flex-auto hidden min-w-0 ml-4 mr-6 md:block group-hover:block">
           <p>Emma Watson</p>
           <div className="flex items-center text-sm text-gray-600">
             <div className="min-w-0">
@@ -87,9 +87,9 @@ export default ChatList;
             </div>
           </div>
         </div>
-        <div className="w-4 h-4 flex flex-shrink-0 hidden md:block group-hover:block">
+        <div className="flex flex-shrink-0 hidden w-4 h-4 md:block group-hover:block">
           <img
-            className="rounded-full w-full h-full object-cover"
+            className="object-cover w-full h-full rounded-full"
             alt="user2"
             src="https://randomuser.me/api/portraits/women/23.jpg"
           />

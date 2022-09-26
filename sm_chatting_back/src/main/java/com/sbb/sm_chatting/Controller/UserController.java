@@ -7,6 +7,7 @@ package com.sbb.sm_chatting.Controller;
          : 로그인 로직 컨트롤러 서비스 분리
 */
 
+import com.sbb.sm_chatting.DTO.UserInfo;
 import com.sbb.sm_chatting.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,10 @@ public class UserController {
         return userService.doJoin(user);
     }
 
-
+    @PostMapping("/searchUser")
+    @ResponseBody
+    public UserInfo searchUser(@RequestBody Map<String, String> user){
+        return userService.searchUser(user);
+    }
 
 }

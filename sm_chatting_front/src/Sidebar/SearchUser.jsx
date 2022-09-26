@@ -1,15 +1,43 @@
-const SearchUser = () => {
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import UserModal from "../Component/Modal/UserModal";
+const SearchUser = ({userId, active, setActive}) => {
+  const [search,setSearch] = useState("");
+  const [searchUserInfo, setSearchUserInfo] = useState("");
+  const [searchModal, setSearchModal] = useState("False");
+  // 유저를 찾는다.
+  const searchSubmit = async(e, search) => {
+    e.preventDefault();
+    const searchUser = await axios({
+      url:"http://localhost:8031/searchUser",
+      method:"POST",
+      data:{
+        search,
+      }
+    });
+    console.log(searchUser.data);
+      if(searchUser.data.length === 0){
+        alert("해당이메일의 유저가 존재하지 않습니다.")
+      }
+      else{
+        setSearchUserInfo(searchUser.data); 
+        setSearchModal("True");
+      }       
+    }
   return (
-    <form>
+    <form onSubmit={(e) => searchSubmit(e, search)}>
       <div className="relative">
         <label>
           <input
-            className="rounded-full py-2 pr-6 pl-10 w-full border border-gray-800 focus:border-gray-700 bg-gray-800 focus:bg-gray-900 focus:outline-none text-gray-200 focus:shadow-md transition duration-300 ease-in"
-            type="text"
-            value=""
+            className="w-full py-2 pl-10 pr-6 text-gray-200 transition duration-300 ease-in bg-gray-800 border border-gray-800 rounded-full focus:border-gray-700 focus:bg-gray-900 focus:outline-none focus:shadow-md"
+            type="email"
+            value={search}
             placeholder="Search Messenger"
+            onChange={(e) => {
+              setSearch(e.target.value)
+            }}
           />
-          <span className="absolute top-0 left-0 mt-2 ml-3 inline-block">
+          <span className="absolute top-0 left-0 inline-block mt-2 ml-3">
             <svg viewBox="0 0 24 24" className="w-6 h-6">
               <path
                 fill="#bbb"
@@ -19,7 +47,9 @@ const SearchUser = () => {
           </span>
         </label>
       </div>
+      {searchModal === "True" ? <UserModal searchUserInfo = {searchUserInfo} setSearchModal={setSearchModal} userId={userId} setActive={setActive}/> : null}
     </form>
+
   );
 };
 

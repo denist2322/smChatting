@@ -26,8 +26,20 @@ public class FriendController {
     @PostMapping("delFriend")
     @ResponseBody
     public String delFriend(@RequestBody Map<String, String> info){
-        System.out.println("컨트롤러 왔음");
         friendService.delFriend(info);
+        return "success";
+    }
+
+    @PostMapping("isFriend")
+    @ResponseBody
+    public String isFriend(@RequestBody Map<String, String> info){
+        return friendService.findFriend(info);
+    }
+
+    @PostMapping("addFriend")
+    @ResponseBody
+    public String addFriend(@RequestBody Map<String, String> info){
+        friendService.addFriend(info);
         return "success";
     }
 }
