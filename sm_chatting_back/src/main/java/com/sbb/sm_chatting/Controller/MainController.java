@@ -38,29 +38,4 @@ public class MainController {
         return result;
     }
 
-//    @GetMapping("/talk/test")
-//    @ResponseBody
-//    public List<SideBarChat> talkTest() {
-//        List<TalkSetting> talkSettings = talkRepository.findByIdExsits("'1'");
-//        List<UserInfo> userInfos = new ArrayList<>();
-//
-//        for (int i = 0; i < talkSettings.size(); i++) {
-//            String opponentId = talkSettings.get(i).getTalkroom_id();
-//            opponentId = opponentId.replace("'1'", "");
-//            opponentId = opponentId.replace("과", "");
-//            opponentId = opponentId.replace("'", "");
-//            System.out.println(opponentId);
-//            UserInfo userInfo = userRepository.findId(Long.parseLong(opponentId));
-//            userInfos.add(userInfo);
-//        }
-//
-//        List<SideBarChat> sideBarChats = new ArrayList<>();
-//
-//        for(int i =0; i < talkSettings.size(); i++){
-//            SideBarChat sideBarChat = new SideBarChat(talkSettings.get(i), userInfos.get(i));
-//            sideBarChats.add(sideBarChat);
-//        }
-//
-//        return sideBarChats;
-//    }
 }

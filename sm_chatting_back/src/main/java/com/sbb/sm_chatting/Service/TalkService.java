@@ -33,8 +33,7 @@ public class TalkService {
         try {
             Talkroom talkroom = talkRoomService.getChatroom(roomId);
             talk.setTalkroom(talkroom);
-        }
-        catch(NullPointerException e){
+        } catch (NullPointerException e) {
             return null;
         }
         // userId는 문자열이다. => int형으로 바꾸기 가능.
@@ -71,7 +70,7 @@ public class TalkService {
         // talkSetting과 UserInfo를 보내기 위해 sideBarChats라는 객체를 만들었다.
         List<SideBarChat> sideBarChats = new ArrayList<>();
 
-        for(int i =0; i < talkSettings.size(); i++){
+        for (int i = 0; i < talkSettings.size(); i++) {
             SideBarChat sideBarChat = new SideBarChat(talkSettings.get(i), userInfos.get(i));
             sideBarChats.add(sideBarChat);
         }
@@ -79,5 +78,8 @@ public class TalkService {
         return sideBarChats;
     }
 
+    public Talk getTalkbyTalkroom(String newTalkroom) {
+        return talkRepository.findByTalkroomId(newTalkroom);
+    }
 
 }

@@ -62,6 +62,23 @@ const UserModal = ({ setUserModal, friend, userId, setActive, searchUserInfo, se
    }
  };
 
+ // 대화방 생성
+ const talkking = async (e) => {
+  e.preventDefault();
+  const addTalkroom = await axios({
+    url: `http://localhost:8031/addTalkroom`,
+    method: "POST",
+    data: {
+      otherOne,
+      myid: userId,
+    },
+  });
+  if(addTalkroom.data != null){
+    console.log(addTalkroom.data);
+    closeModal();
+  }
+ }
+
  // ======
  return (
   <div className="fixed top-0 left-0 flex items-center justify-center w-full h-screen text-center bg-black bg-opacity-70">
@@ -78,7 +95,7 @@ const UserModal = ({ setUserModal, friend, userId, setActive, searchUserInfo, se
     </div>
 
     <div className="flex justify-between">
-     <div className="p-5 text-base text-black cursor-pointer mx">1:1 채팅</div>
+     <div className="p-5 text-base text-black cursor-pointer mx" onClick={(e) => {talkking(e)}}>1:1 채팅</div>
      <div
       className="p-5 text-base text-black cursor-pointer"
       onClick={(e) => {friendConfirm === "True" ? deleteFriend(e) : addFriend(e)}}

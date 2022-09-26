@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TalkRoomRepository extends JpaRepository<Talkroom, String> {
 
+    boolean existsById(String newTalkroom);
 }
