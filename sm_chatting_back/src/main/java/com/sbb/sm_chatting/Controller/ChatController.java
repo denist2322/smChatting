@@ -6,7 +6,6 @@ import com.sbb.sm_chatting.DTO.TalkSetting;
 import com.sbb.sm_chatting.DTO.UserId;
 import com.sbb.sm_chatting.Entity.Talk;
 import com.sbb.sm_chatting.Service.TalkService;
-import com.sbb.sm_chatting.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -25,7 +24,6 @@ public class ChatController {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final TalkService talkService;
-    private final UserService userService;
 
     // 실시간 채팅에 대한 응답
     @MessageMapping("/chat/{id}")

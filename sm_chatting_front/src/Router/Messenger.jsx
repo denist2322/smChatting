@@ -64,9 +64,6 @@ const Messenger = () => {
   // 채팅방이 생성되면 새로 연결이 필요함. ([]에 내용추가) - 아직 미 구현
  }, [chatRoomId]);
 
- // 채팅방이 추가되었을 때
- useEffect(() => {}, []);
-
  return (
   <div className="h-screen w-full flex antialiased text-gray-200 bg-gray-900 overflow-hidden" onLoad={isLogined}>
    <div className="flex-1 flex flex-col">

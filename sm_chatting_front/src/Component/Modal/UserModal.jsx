@@ -1,29 +1,29 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const UserModal = ({ setUserModal, friend, userId, setActive, searchUserInfo, setSearchModal }) => {
-  const [friendConfirm, setFriendConfirm] = useState("");
-  const otherOne = friend != null ? friend.user.id : searchUserInfo.id;
-  // 친구인지 아닌지 확인한다.
-  useEffect(() => {
-    console.log("myid " +  userId + " otherOne " + otherOne);
-    const ifFriend = async() => {
-      const ifFriendData = await axios({
-        url:`http://localhost:8031/isFriend`,
-        method: "POST",
-        data:{
-          otherOne,
-          myid: userId
-        }
-      })
-      setFriendConfirm(ifFriendData.data);
-      console.log(ifFriendData.data)
-    }
-    ifFriend();
-  }, []);
+const UserModal = ({ setChatRoomId, setUserModal, friend, userId, setActive, searchUserInfo, setSearchModal }) => {
+ const [friendConfirm, setFriendConfirm] = useState("");
+ const otherOne = friend != null ? friend.user.id : searchUserInfo.id;
+ // 친구인지 아닌지 확인한다.
+ useEffect(() => {
+  console.log("myid " + userId + " otherOne " + otherOne);
+  const ifFriend = async () => {
+   const ifFriendData = await axios({
+    url: `http://localhost:8031/isFriend`,
+    method: "POST",
+    data: {
+     otherOne,
+     myid: userId,
+    },
+   });
+   setFriendConfirm(ifFriendData.data);
+   console.log(ifFriendData.data);
+  };
+  ifFriend();
+ }, []);
 
  // 모달창을 닫을 때 사용한다.
-  const closeModal = () => {
+ const closeModal = () => {
   setUserModal != null ? setUserModal("False") : setSearchModal("False");
  };
  // 친구를 삭제할 때 사용한다.
@@ -39,8 +39,8 @@ const UserModal = ({ setUserModal, friend, userId, setActive, searchUserInfo, se
   });
   // 성공적으로 작동하면 삭제한 친구를 빼고 화면을 다시 그려줘야한다.
   if (delData.data === "success") {
-    setActive("True");
-    closeModal();
+   setActive("True");
+   closeModal();
   }
  };
 
@@ -57,27 +57,27 @@ const UserModal = ({ setUserModal, friend, userId, setActive, searchUserInfo, se
   });
   // 성공적으로 작동하면 추가한 친구를 화면에 다시 그려줘야한다.
   if (addFriendData.data === "success") {
-    setActive("True");
-    closeModal();
-   }
+   setActive("True");
+   closeModal();
+  }
  };
 
  // 대화방 생성
  const talkking = async (e) => {
   e.preventDefault();
   const addTalkroom = await axios({
-    url: `http://localhost:8031/addTalkroom`,
-    method: "POST",
-    data: {
-      otherOne,
-      myid: userId,
-    },
+   url: `http://localhost:8031/addTalkroom`,
+   method: "POST",
+   data: {
+    otherOne,
+    myid: userId,
+   },
   });
-  if(addTalkroom.data != null){
-    console.log(addTalkroom.data);
-    closeModal();
+  if (addTalkroom.data != null) {
+   closeModal();
+   setChatRoomId(addTalkroom.data);
   }
- }
+ };
 
  // ======
  return (
@@ -91,14 +91,23 @@ const UserModal = ({ setUserModal, friend, userId, setActive, searchUserInfo, se
       <img className="object-cover w-full h-full rounded-full shadow-md" src="https://randomuser.me/api/portraits/women/61.jpg" alt="" />
      </div>
      <p className="pt-2 mt-3 text-xl font-semibold text-gray-50">{friend != null ? friend.user.username : searchUserInfo.username}</p>
-     <p className="mt-1 text-base text-gray-100">{friend != null ? friend.user.useremail : searchUserInfo.useremail }</p>
+     <p className="mt-1 text-base text-gray-100">{friend != null ? friend.user.useremail : searchUserInfo.useremail}</p>
     </div>
 
     <div className="flex justify-between">
-     <div className="p-5 text-base text-black cursor-pointer mx" onClick={(e) => {talkking(e)}}>1:1 채팅</div>
+     <div
+      className="p-5 text-base text-black cursor-pointer mx"
+      onClick={(e) => {
+       talkking(e);
+      }}
+     >
+      1:1 채팅
+     </div>
      <div
       className="p-5 text-base text-black cursor-pointer"
-      onClick={(e) => {friendConfirm === "True" ? deleteFriend(e) : addFriend(e)}}
+      onClick={(e) => {
+       friendConfirm === "True" ? deleteFriend(e) : addFriend(e);
+      }}
      >
       {friendConfirm === "True" ? "친구 삭제" : "친구 추가"}
      </div>

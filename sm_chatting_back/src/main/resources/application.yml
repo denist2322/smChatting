@@ -26,3 +26,5 @@ spring:
           type:
             descriptor:
               sql: trace
+  main:
+    allow-circular-references: true

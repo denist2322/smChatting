@@ -1,4 +1,4 @@
-const ChatList = ({ listMsg, setChatRoomId}) => {
+const ChatList = ({ listMsg, setChatRoomId }) => {
  const changeChatRoomId = (id) => {
   setChatRoomId(id);
  };
@@ -9,6 +9,7 @@ const ChatList = ({ listMsg, setChatRoomId}) => {
      key={index}
      className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-800"
      onClick={() => {
+      // 여기가 문제임.
       changeChatRoomId(_msg.talkSetting.talkroom_id);
      }}
     >

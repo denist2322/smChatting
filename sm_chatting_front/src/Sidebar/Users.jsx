@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Modal from "../Component/Modal/UserModal.jsx";
-const Users = ({ userId, active, setActive}) => {
+const Users = ({ userId, active, setActive, setChatRoomId }) => {
  // 친구목록을 받을거다.
  const [friend, setFriend] = useState([]);
  const [userModal, setUserModal] = useState("False");
  useEffect(() => {
-   setActive("False");
+  setActive("False");
   const userList = async () => {
    const userData = await axios({
     url: `http://localhost:8031/friendList`,
@@ -45,7 +45,9 @@ const Users = ({ userId, active, setActive}) => {
       </div>
      </div>
      <p>{_friend.user.username}</p>
-     {userModal === _friend.user.id + "True" ? <Modal setUserModal={setUserModal} friend={_friend} userId={userId} setActive={setActive} /> : null}
+     {userModal === _friend.user.id + "True" ? (
+      <Modal setUserModal={setUserModal} friend={_friend} userId={userId} setActive={setActive} setChatRoomId={setChatRoomId} />
+     ) : null}
     </div>
    ))}
   </>

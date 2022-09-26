@@ -17,7 +17,6 @@ public class TalkService {
 
     private final TalkRepository talkRepository;
     private final TalkRoomService talkRoomService;
-
     private final UserService userService;
 
     // 대화내용을 대화 방 기준으로 추출한다.
@@ -43,9 +42,13 @@ public class TalkService {
         return talk;
     }
 
+    public void TalkSave(Talk talk) {
+        talkRepository.save(talk);
+    }
+
     // WebSocket으로 메시지를 보낼 때 Message에 필요한 내용을 Talk 으로 부터 받아서 보낸다.
     public void convertMessage(Message message, Talk talk) {
-        message.setRegdate(talk.getTalkregdate().toString());
+        message.setRegdate(talk.getTalkregdate());
         message.setSenduserid(talk.getSenduserid());
         message.setTalkroom_id(talk.getTalkroom().getId());
     }
@@ -78,8 +81,5 @@ public class TalkService {
         return sideBarChats;
     }
 
-    public Talk getTalkbyTalkroom(String newTalkroom) {
-        return talkRepository.findByTalkroomId(newTalkroom);
-    }
 
 }

@@ -12,8 +12,6 @@ import java.util.List;
 @Repository
 public interface TalkRepository extends JpaRepository<Talk, Long> {
     List<TalkSetting> findByTalkroomId(String id);
-    @Query(value="SELECT * FROM Talk t WHERE t.talkroom_id = : id")
-    Talk findTalkroomId(@Param("id") String id);
 
     // 대화와 연결된 채팅방 id로 검색하여 채팅 목록을 추출하며, 각 채팅방 당 제일 최신 단건만을 조회한다.
     @Query(value = "SELECT * FROM (" +
