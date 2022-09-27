@@ -28,6 +28,7 @@ const Messenger = () => {
  const userId = localStorage.getItem("id");
 
  useEffect(() => {
+  console.log(chatRoomId);
   setContent("");
 
   client.connect({}, () => {
@@ -42,8 +43,8 @@ const Messenger = () => {
    client.subscribe(`/queue/chatList/'${userId}'`, function (Message) {
     const newMsg = JSON.parse(Message.body);
     // 이전 메시지(prev) 를 가져와 새로 도착한 메시지만 출력해서 저장함.
-    setListMsg((prev) =>
-     [...prev].map((_msg) =>
+    setListMsg(
+     listMsg.map((_msg) =>
       _msg.talkSetting.talkroom_id === newMsg.talkroom_id ? { ..._msg, talkSetting: { content: newMsg.content, talkregdate: newMsg.regdate } } : _msg
      )
     );
@@ -64,6 +65,7 @@ const Messenger = () => {
   });
 
   // 연결을 끊는다 (소캣을 지운다.)
+
   return async () => {
    await client.disconnect();
   };

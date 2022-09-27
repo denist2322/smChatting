@@ -3,15 +3,15 @@ package com.sbb.sm_chatting.DTO;
 import lombok.Data;
 
 @Data
-public class SideBarChat {
+public class TalkChatSetting {
     TalkSetting talkSetting;
     UserInfo userInfo;
 
-    public SideBarChat() {
+    public TalkChatSetting() {
 
     }
 
-    public SideBarChat(TalkSetting talkSetting, UserInfo userInfo) {
+    public TalkChatSetting(TalkSetting talkSetting, UserInfo userInfo) {
         this.talkSetting = talkSetting;
         this.userInfo = userInfo;
     }

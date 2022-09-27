@@ -1,7 +1,7 @@
 package com.sbb.sm_chatting.Controller;
 
 import com.sbb.sm_chatting.DTO.Message;
-import com.sbb.sm_chatting.DTO.SideBarChat;
+import com.sbb.sm_chatting.DTO.TalkChatSetting;
 import com.sbb.sm_chatting.DTO.TalkSetting;
 import com.sbb.sm_chatting.DTO.UserId;
 import com.sbb.sm_chatting.Entity.Talk;
@@ -49,8 +49,8 @@ public class ChatController {
     // 로그인한 유저가 소속된 각 채팅방의 제일 최신 채팅 한건씩을 가져옴
     @MessageMapping("/chatRoomSetting/{id}")
     public void chatRoomSetting(@DestinationVariable("id") String id){
-        List<SideBarChat> sideBarChats = talkService.getSideBarChat(id);
-        this.simpMessagingTemplate.convertAndSend("/queue/chatRoomSetting/" + id, sideBarChats);
+        List<TalkChatSetting> talkChatSettings = talkService.getSideBarChat(id);
+        this.simpMessagingTemplate.convertAndSend("/queue/chatRoomSetting/" + id, talkChatSettings);
     }
 
 }

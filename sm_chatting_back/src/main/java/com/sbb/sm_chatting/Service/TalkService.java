@@ -54,7 +54,7 @@ public class TalkService {
     }
 
     // 최신 채팅 내역 및 방을 가져온다.
-    public List<SideBarChat> getSideBarChat(String id) {
+    public List<TalkChatSetting> getSideBarChat(String id) {
         // 요청한 유저가 포함된 채팅방의 데이터 가져온다.
         List<TalkSetting> talkSettings = talkRepository.findByIdExsits(id);
         // 그 채팅방에 상대 유저의 정보를 가져온다.
@@ -70,14 +70,14 @@ public class TalkService {
             userInfos.add(userInfo);
         }
         // talkSetting과 UserInfo를 보내기 위해 sideBarChats라는 객체를 만들었다.
-        List<SideBarChat> sideBarChats = new ArrayList<>();
+        List<TalkChatSetting> talkChatSettings = new ArrayList<>();
 
         for (int i = 0; i < talkSettings.size(); i++) {
-            SideBarChat sideBarChat = new SideBarChat(talkSettings.get(i), userInfos.get(i));
-            sideBarChats.add(sideBarChat);
+            TalkChatSetting talkChatSetting = new TalkChatSetting(talkSettings.get(i), userInfos.get(i));
+            talkChatSettings.add(talkChatSetting);
         }
 
-        return sideBarChats;
+        return talkChatSettings;
     }
 
     public String splitChatroomId(String myId, String roomId){

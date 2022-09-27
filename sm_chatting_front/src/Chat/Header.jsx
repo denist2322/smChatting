@@ -1,8 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 const Header = ({ chatRoomId, userId }) => {
- const navigate = useNavigate();
  const [otherOneName, setOtherOneName] = useState("");
 
  useEffect(() => {
@@ -18,13 +16,7 @@ const Header = ({ chatRoomId, userId }) => {
    setOtherOneName(otherOne.data);
   };
   getOtherOneName();
- });
-
- const Logout = (e) => {
-  e.preventDefault();
-  localStorage.removeItem("Token");
-  navigate("/");
- };
+ }, [chatRoomId]);
 
  return (
   <>
@@ -39,11 +31,6 @@ const Header = ({ chatRoomId, userId }) => {
     <div className="text-sm">
      <p className="flex font-bold text-base py-3">{otherOneName}</p>
     </div>
-   </div>
-   <div className="flex">
-    <button type="button" className="block rounded-full hover:bg-gray-700 bg-gray-800 w-10 h-10 p-2" onClick={Logout}>
-     로그아웃
-    </button>
    </div>
   </>
  );
