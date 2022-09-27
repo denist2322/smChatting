@@ -63,11 +63,10 @@ public class TalkService {
         for (int i = 0; i < talkSettings.size(); i++) {
             // 채팅방에는 당사자와 상대를 구분 할 수 있는 id로 만들었다.
             // 상대의 id로 추출하는 과정이다.
-            String opponentId = talkSettings.get(i).getTalkroom_id();
-            opponentId = opponentId.replace(id, "");
-            opponentId = opponentId.replace("과", "");
-            opponentId = opponentId.replace("'", "");
-            UserInfo userInfo = userService.findId(Long.parseLong(opponentId));
+            String otherOneId = talkSettings.get(i).getTalkroom_id();
+            otherOneId = splitChatroomId(id, otherOneId);
+
+            UserInfo userInfo = userService.findId(Long.parseLong(otherOneId));
             userInfos.add(userInfo);
         }
         // talkSetting과 UserInfo를 보내기 위해 sideBarChats라는 객체를 만들었다.
@@ -81,5 +80,11 @@ public class TalkService {
         return sideBarChats;
     }
 
+    public String splitChatroomId(String myId, String roomId){
+        String splitRoomId = roomId.replace(myId, "");
+        splitRoomId = splitRoomId.replace("과", "");
+        splitRoomId = splitRoomId.replace("'", "");
+        return splitRoomId;
+    }
 
 }

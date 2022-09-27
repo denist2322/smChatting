@@ -21,6 +21,7 @@ public class TalkRoomService {
     public String addTalkroom(Map<String, String> info) {
         String myid = info.get("myid");
         String otherOne = info.get("otherOne");
+        // 채팅방 id를 생성한다.
         String newTalkroom = "";
         if(Long.parseLong(myid) > Long.parseLong(otherOne)){
             newTalkroom = "'" + otherOne + "'" + "과" + "'" + myid + "'";

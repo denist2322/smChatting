@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 
 const UserModal = ({ setChatRoomId, setUserModal, friend, userId, setActive, searchUserInfo, setSearchModal }) => {
  const [friendConfirm, setFriendConfirm] = useState("");
+ // 상대의 아이디를 가져온다. (friend : 친구 목록에서 받아온 정보,  SearchInfo : 검색으로 받아온 정보)
  const otherOne = friend != null ? friend.user.id : searchUserInfo.id;
- // 친구인지 아닌지 확인한다.
+
  useEffect(() => {
-  console.log("myid " + userId + " otherOne " + otherOne);
+  // 친구인지 아닌지 확인한다.
   const ifFriend = async () => {
    const ifFriendData = await axios({
     url: `http://localhost:8031/isFriend`,
@@ -16,8 +17,8 @@ const UserModal = ({ setChatRoomId, setUserModal, friend, userId, setActive, sea
      myid: userId,
     },
    });
+   // 친구여부의 결과를 저장
    setFriendConfirm(ifFriendData.data);
-   console.log(ifFriendData.data);
   };
   ifFriend();
  }, []);
@@ -75,7 +76,8 @@ const UserModal = ({ setChatRoomId, setUserModal, friend, userId, setActive, sea
   });
   if (addTalkroom.data != null) {
    closeModal();
-   setChatRoomId((prev) => [...prev, addTalkroom.data]);
+   console.log("대화방이 생성되었어요!!!!!");
+   setChatRoomId(addTalkroom.data);
   }
  };
 
@@ -88,7 +90,11 @@ const UserModal = ({ setChatRoomId, setUserModal, friend, userId, setActive, sea
       x
      </span>
      <div className="flex flex-shrink-0 w-32 h-32 mx-auto">
-      <img className="object-cover w-full h-full rounded-full shadow-md" src="https://randomuser.me/api/portraits/women/61.jpg" alt="" />
+      <img
+       className="object-cover w-full h-full rounded-full shadow-md"
+       src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIFyGQ%2FbtrM8OsCYqS%2FkyJR43ymFXBqMiLEpTDb20%2Fimg.png"
+       alt=""
+      />
      </div>
      <p className="pt-2 mt-3 text-xl font-semibold text-gray-50">{friend != null ? friend.user.username : searchUserInfo.username}</p>
      <p className="mt-1 text-base text-gray-100">{friend != null ? friend.user.useremail : searchUserInfo.useremail}</p>

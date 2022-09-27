@@ -64,7 +64,6 @@ public class UserService {
         return user;
     }
 
-
     public String doJoin(Map<String, String> user) {
         if (userRepository.existsByUseremail(user.get("userEmail"))) {
             return "existEmail";

@@ -18,7 +18,6 @@ const Users = ({ userId, active, setActive, setChatRoomId }) => {
    setFriend(userData.data);
    // user{ id, useremail, username }
   };
-  // 함수를 실행해야 작동함.
   userList();
  }, [active]);
 
@@ -41,7 +40,11 @@ const Users = ({ userId, active, setActive, setChatRoomId }) => {
       }}
      >
       <div className="flex flex-shrink-0 w-16 h-16">
-       <img className="object-cover w-full h-full rounded-full shadow-md" src="https://randomuser.me/api/portraits/women/12.jpg" alt="" />
+       <img
+        className="object-cover w-full h-full rounded-full shadow-md"
+        src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIFyGQ%2FbtrM8OsCYqS%2FkyJR43ymFXBqMiLEpTDb20%2Fimg.png"
+        alt=""
+       />
       </div>
      </div>
      <p>{_friend.user.username}</p>
@@ -55,36 +58,3 @@ const Users = ({ userId, active, setActive, setChatRoomId }) => {
 };
 
 export default Users;
-
-{
- /*<div className="mr-4 text-sm text-center">
-    <div className="p-1 border-4 border-transparent rounded-full">
-     <div className="relative flex flex-shrink-0 w-16 h-16">
-      <img className="object-cover w-full h-full rounded-full shadow-md" src="https://randomuser.me/api/portraits/men/75.jpg" alt="" />
-      <div className="absolute bottom-0 right-0 p-1 bg-gray-900 rounded-full">
-       <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-      </div>
-     </div>
-    </div>
-    <p>Jeff</p>
-   </div>
-   <div className="mr-4 text-sm text-center">
-    <div className="p-1 border-4 border-blue-600 rounded-full">
-     <div className="relative flex flex-shrink-0 w-16 h-16">
-      <img className="object-cover w-full h-full rounded-full shadow-md" src="https://randomuser.me/api/portraits/women/42.jpg" alt="" />
-     </div>
-    </div>
-    <p>Cathy</p>
-   </div>
-   <div className="mr-4 text-sm text-center">
-    <div className="p-1 border-4 border-transparent rounded-full">
-     <div className="relative flex flex-shrink-0 w-16 h-16">
-      <img className="object-cover w-full h-full rounded-full shadow-md" src="https://randomuser.me/api/portraits/women/87.jpg" alt="" />
-      <div className="absolute bottom-0 right-0 p-1 bg-gray-900 rounded-full">
-       <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-      </div>
-     </div>
-    </div>
-    <p>Madona</p>
-   </div> */
-}

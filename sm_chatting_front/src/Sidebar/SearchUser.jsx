@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UserModal from "../Component/Modal/UserModal";
 import AlertModal from "../Component/Modal/alertModal";
-const SearchUser = ({ userId, active, setActive, setChatRoomId }) => {
+const SearchUser = ({ userId, setActive, setChatRoomId }) => {
  const [search, setSearch] = useState("");
  const [searchUserInfo, setSearchUserInfo] = useState("");
  const [searchModal, setSearchModal] = useState("False");
@@ -17,11 +17,12 @@ const SearchUser = ({ userId, active, setActive, setChatRoomId }) => {
     search,
    },
   });
-  console.log(searchUser.data);
   if (searchUser.data.length === 0) {
+   // 유저가 없다면 경고창을 띄운다.
    setOnOffAlert("True");
    setSearch("");
   } else {
+   // 유저 데이터를 userInfo에 담고 모달창을 띄운다.
    setSearchUserInfo(searchUser.data);
    setSearchModal("True");
    setSearch("");
