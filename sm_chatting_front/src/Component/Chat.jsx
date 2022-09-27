@@ -1,6 +1,7 @@
 import ChatFooter from "../Chat/Footer";
 import ChatMain from "../Chat/Main.jsx";
 import ChatHeader from "../Chat/Header.jsx";
+import ChatBox from "../Chat/ChatBox.jsx";
 
 const Chat = ({ chatMsg, client, content, setContent, chatRoomId, userId, setChatRoomId }) => {
  return (
@@ -10,7 +11,10 @@ const Chat = ({ chatMsg, client, content, setContent, chatRoomId, userId, setCha
      <div className="chat-header px-6 py-6 flex flex-row flex-none justify-between items-center shadow">
       {<ChatHeader chatRoomId={chatRoomId} userId={userId} />}
      </div>
-     <div className="chat-body p-4 flex-1 overflow-y-scroll">{<ChatMain chatMsg={chatMsg} />}</div>
+     <div className="chat-body p-4 flex-1 overflow-y-scroll">
+      {/*<ChatMain chatMsg={chatMsg} />*/}
+      {<ChatBox chatMsg={chatMsg} />}
+     </div>
      <div className="chat-footer flex-none">
       {<ChatFooter client={client} content={content} setContent={setContent} chatRoomId={chatRoomId} setChatRoomId={setChatRoomId} />}
      </div>
