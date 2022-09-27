@@ -1,38 +1,42 @@
 const ChatList = ({ listMsg, setChatRoomId }) => {
- const changeChatRoomId = (id) => {
-  setChatRoomId((prev) => [...prev, id]);
- };
- return (
-  <>
-   {listMsg.map((_msg, index) => (
-    <div
-     key={index}
-     className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-800"
-     onClick={() => {
-      changeChatRoomId(_msg.talkSetting.talkroom_id);
-     }}
-    >
-     <div className="flex flex-shrink-0 w-16 h-16">
-      <img className="object-cover w-full h-full rounded-full shadow-md" src="https://randomuser.me/api/portraits/women/61.jpg" alt="" />
-     </div>
-     <div className="flex-auto hidden min-w-0 ml-4 mr-6 md:block group-hover:block">
-      <p>{_msg.userInfo.username}</p>
-      <div className="flex items-center text-sm text-gray-600">
-       <div className="min-w-0">
-        <p className="truncate">{_msg.talkSetting.content}</p>
-       </div>
-      </div>
-     </div>
-    </div>
-   ))}
-  </>
- );
+  const changeChatRoomId = (id) => {
+    setChatRoomId((prev) => [...prev, id]);
+  };
+  return (
+    <>
+      {listMsg.map((_msg, index) => (
+        <div
+          key={index}
+          className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-800"
+          onClick={() => {
+            changeChatRoomId(_msg.talkSetting.talkroom_id);
+          }}
+        >
+          <div className="flex flex-shrink-0 w-16 h-16">
+            <img
+              className="object-cover w-full h-full rounded-full shadow-md"
+              src="https://randomuser.me/api/portraits/women/61.jpg"
+              alt=""
+            />
+          </div>
+          <div className="flex-auto hidden min-w-0 ml-4 mr-6 md:block group-hover:block">
+            <p>{_msg.userInfo.username}</p>
+            <div className="flex items-center text-sm text-gray-600">
+              <div className="min-w-0">
+                <p className="truncate">{_msg.talkSetting.content}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </>
+  );
 };
 
 export default ChatList;
 
 {
- /* <div className="relative flex items-center justify-between p-3 rounded-lg hover:bg-gray-800">
+  /* <div className="relative flex items-center justify-between p-3 rounded-lg hover:bg-gray-800">
         <div className="relative flex flex-shrink-0 w-16 h-16">
           <img
             className="object-cover w-full h-full rounded-full shadow-md"
