@@ -1,6 +1,9 @@
-const ChatList = ({ listMsg, setChatRoomId }) => {
+const ChatList = ({ listMsg, setChatRoomId, chatRoomId }) => {
  const changeChatRoomId = (id) => {
-  setChatRoomId(id);
+  if (id !== chatRoomId && id !== undefined) {
+   setChatRoomId(id);
+  }
+  return;
  };
  return (
   <>

@@ -61,6 +61,7 @@ const Messenger = () => {
    client.subscribe(`/queue/addChatToClient/${chatRoomId}`, function (Message) {
     const newMsg = JSON.parse(Message.body);
     setchatMsg((prev) => [...prev, newMsg]);
+    console.log("!!!!!!!!!!chatRoomId", chatRoomId);
    });
   });
 
@@ -76,8 +77,17 @@ const Messenger = () => {
   <div className="flex w-full h-screen overflow-hidden antialiased text-gray-200 bg-gray-900" onLoad={isLogined}>
    <div className="flex flex-col flex-1">
     <main className="flex flex-row flex-grow min-h-0">
-     <Sidebar listMsg={listMsg} setChatRoomId={setChatRoomId} userId={userId} />
-     <Chat chatMsg={chatMsg} setchatMsg={setchatMsg} client={client} content={content} setContent={setContent} chatRoomId={chatRoomId} userId={userId} />
+     <Sidebar listMsg={listMsg} setChatRoomId={setChatRoomId} userId={userId} chatRoomId={chatRoomId} />
+     <Chat
+      chatMsg={chatMsg}
+      setchatMsg={setchatMsg}
+      client={client}
+      content={content}
+      setContent={setContent}
+      chatRoomId={chatRoomId}
+      userId={userId}
+      setChatRoomId={setChatRoomId}
+     />
     </main>
    </div>
   </div>

@@ -2,7 +2,7 @@ import ChatFooter from "../Chat/Footer";
 import ChatMain from "../Chat/Main.jsx";
 import ChatHeader from "../Chat/Header.jsx";
 
-const Chat = ({ chatMsg, client, content, setContent, chatRoomId, userId }) => {
+const Chat = ({ chatMsg, client, content, setContent, chatRoomId, userId, setChatRoomId }) => {
  return (
   <>
    {chatRoomId != "" ? (
@@ -11,7 +11,9 @@ const Chat = ({ chatMsg, client, content, setContent, chatRoomId, userId }) => {
       {<ChatHeader chatRoomId={chatRoomId} userId={userId} />}
      </div>
      <div className="chat-body p-4 flex-1 overflow-y-scroll">{<ChatMain chatMsg={chatMsg} />}</div>
-     <div className="chat-footer flex-none">{<ChatFooter client={client} content={content} setContent={setContent} chatRoomId={chatRoomId} />}</div>
+     <div className="chat-footer flex-none">
+      {<ChatFooter client={client} content={content} setContent={setContent} chatRoomId={chatRoomId} setChatRoomId={setChatRoomId} />}
+     </div>
     </section>
    ) : (
     <section className="flex flex-auto border-l border-gray-800 justify-center items-center text-3xl">안녕하세요</section>

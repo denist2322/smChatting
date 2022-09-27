@@ -1,4 +1,4 @@
-const footer = ({ client, content, setContent, chatRoomId }) => {
+const footer = ({ client, content, setContent, chatRoomId, setChatRoomId }) => {
  const userId = localStorage.getItem("id");
  // 메시지 제출
  const handleSubmit = (e, content) => {
