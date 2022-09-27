@@ -18,8 +18,6 @@ const Messenger = () => {
   const [active, setActive] = useState("");
   // 로그인 되어 있는지 체크한다.
 
-  const socket = new SockJS("http:/localhost:8031/chat/chatting");
-  const client = Stomp.over(socket);
   const isLogined = async (e) => {
     if (localStorage.getItem("Token") === null) {
       navigate("/");
@@ -27,7 +25,8 @@ const Messenger = () => {
     }
   };
   // 웹소캣 연결
-
+  const socket = new SockJS("http:/localhost:8031/chat/chatting");
+  const client = Stomp.over(socket);
   const userId = localStorage.getItem("id");
 
   useEffect(() => {
@@ -45,12 +44,17 @@ const Messenger = () => {
       client.subscribe(`/queue/chatList/'${userId}'`, function (Message) {
         const newMsg = JSON.parse(Message.body);
         console.log("newMsg", newMsg);
+        console.log("listMsg", listMsg);
         // 이전 메시지(prev) 를 가져와 새로 도착한 메시지만 출력해서 저장함.
         setListMsg((prev) =>
-          [...prev].map((_msg) =>
-            _msg.talkroom_id === newMsg.talkroom_id
-              ? { ..._msg, content: newMsg.content, regdate: newMsg.regdate }
-              : _msg
+          [...prev].map(
+            (_msg) =>
+              _msg.talkSetting.talkroom_id === newMsg.talkroom_id
+                ? { _msg: { ..._msg.talkSetting, content: newMsg.content, talkregdate: newMsg.regdate } }
+                : _msg
+            //   ? /* ..._msg, content: newMsg.content, talkregdate: newMsg.regdate */
+            //     console.log("안녕")
+            //   : _msg
           )
         );
       });
