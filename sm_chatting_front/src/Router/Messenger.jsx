@@ -28,7 +28,6 @@ const Messenger = () => {
  const userId = localStorage.getItem("id");
 
  useEffect(() => {
-  console.log(chatRoomId);
   setContent("");
 
   client.connect({}, () => {
@@ -61,7 +60,6 @@ const Messenger = () => {
    client.subscribe(`/queue/addChatToClient/${chatRoomId}`, function (Message) {
     const newMsg = JSON.parse(Message.body);
     setchatMsg((prev) => [...prev, newMsg]);
-    console.log("!!!!!!!!!!chatRoomId", chatRoomId);
    });
   });
 
