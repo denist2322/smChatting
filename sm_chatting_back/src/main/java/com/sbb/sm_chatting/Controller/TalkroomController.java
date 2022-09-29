@@ -6,23 +6,21 @@ import com.sbb.sm_chatting.DTO.UserId;
 import com.sbb.sm_chatting.Service.TalkRoomService;
 import com.sbb.sm_chatting.Service.TalkService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class TalkroomController {
     private final TalkRoomService talkRoomService;
     private final TalkService talkServicel;
 
     @PostMapping("/addTalkroom")
-    @ResponseBody
     public String addTalkroom(@RequestBody Map<String, String> info){
         String talkroomId = talkRoomService.addTalkroom(info);
         List<TalkSetting> talkSettings = talkServicel.talkList(talkroomId);
