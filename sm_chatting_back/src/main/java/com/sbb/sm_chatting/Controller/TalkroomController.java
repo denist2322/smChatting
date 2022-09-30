@@ -25,7 +25,7 @@ public class TalkroomController {
         String talkroomId = talkRoomService.addTalkroom(info);
         List<TalkSetting> talkSettings = talkServicel.talkList(talkroomId);
         if(talkSettings.size() == 0){
-            Message message = new Message(talkroomId, 0, "대화방이 생성되었습니다.", LocalDateTime.now());
+            Message message = new Message(talkroomId, 0, "대화방이 생성되었습니다.", LocalDateTime.now(), null);
             UserId userId = new UserId("0");
             talkServicel.TalkSave(message, talkroomId, userId);
         }

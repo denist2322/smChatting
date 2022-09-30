@@ -11,7 +11,10 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashSet;
 import java.util.List;
@@ -53,4 +56,10 @@ public class ChatController {
         this.simpMessagingTemplate.convertAndSend("/queue/chatRoomSetting/" + id, talkChatSettings);
     }
 
+    @PostMapping("/fileUpload")
+    public String fileUpload(@RequestParam("files") List<MultipartFile> files, @RequestParam("id") Long id){
+        System.out.println(files);
+        System.out.println(id);
+        return "왔다.";
+    }
 }
