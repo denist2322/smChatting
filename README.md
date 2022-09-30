@@ -32,5 +32,3 @@
 * useState
 * base64
 * Taliwind
-* FontAwsome
-* Daisyui
