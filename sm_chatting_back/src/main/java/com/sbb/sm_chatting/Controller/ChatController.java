@@ -57,9 +57,7 @@ public class ChatController {
     }
 
     @PostMapping("/fileUpload")
-    public String fileUpload(@RequestParam("files") List<MultipartFile> files, @RequestParam("id") Long id){
-        System.out.println(files);
-        System.out.println(id);
-        return "왔다.";
+    public List<String> fileUpload(@RequestParam("files") List<MultipartFile> files, @RequestParam("id") Long id){
+        return talkService.fileUpload(files, id);
     }
 }

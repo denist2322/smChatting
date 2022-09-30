@@ -7,7 +7,12 @@ const Main = ({ chatMsg }) => {
      <div key={index} className="flex flex-row justify-end mt-1">
       <div className="messages text-sm text-white grid grid-flow-row gap-2">
        <div className="flex items-center flex-row-reverse group">
-        <p className="px-4 py-2 rounded-t-full rounded-l-full bg-blue-700 max-w-xs lg:max-w-md">{_msg.content}</p>
+        {_msg.content !== null ? (
+         <p className="px-4 py-2 rounded-t-full rounded-l-full bg-blue-700 max-w-xs lg:max-w-md"> {_msg.content} </p>
+        ) : (
+         <img src={`http://localhost:8031/upload_file/${_msg.files}`} alt="이미지를 불러올 수 없습니다." className="w-60 h-60" />
+        )}
+
         <button
          type="button"
          className="hidden group-hover:block flex flex-shrink-0 focus:outline-none mx-2 block rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-700 bg-gray-800 w-8 h-8 p-2"
@@ -35,7 +40,12 @@ C15.786,7.8,14.8,8.785,14.8,10s0.986,2.2,2.201,2.2S19.2,11.215,19.2,10S18.216,7.
       </div>
       <div className="messages text-sm text-gray-700 grid grid-flow-row gap-2">
        <div className="flex items-center group">
-        <p className="px-4 py-2 rounded-t-full rounded-r-full bg-gray-800 max-w-xs lg:max-w-md text-gray-200">{_msg.content}</p>
+        {_msg.content !== null ? (
+         <p className="px-4 py-2 rounded-t-full rounded-r-full bg-gray-800 max-w-xs lg:max-w-md text-gray-200">{_msg.content} </p>
+        ) : (
+         <img src={`http://localhost:8031/upload_file/${_msg.files}`} alt="이미지를 불러올 수 없습니다." />
+        )}
+
         <button
          type="button"
          className="hidden group-hover:block flex flex-shrink-0 focus:outline-none mx-2 block rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-700 bg-gray-800 w-8 h-8 p-2"

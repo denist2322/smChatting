@@ -46,8 +46,9 @@ UPDATE `user` SET userrole = "ROLE_USER" WHERE useremail = "test2@test.com";
 CREATE TABLE `talk`(
    id BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
    talkregdate DATE NOT NULL,
-   content TEXT NOT NULL,
-   talkroom_id VARCHAR(200) NOT NULL
+   content TEXT,
+   talkroom_id VARCHAR(200) NOT NULL,
+   `files` TEXT
 );
 
 ALTER TABLE `talk` ADD senduserid INT NOT NULL;
@@ -104,7 +105,7 @@ SELECT * FROM `talk`;
 SELECT t.content, t.talkregdate FROM talk t;
 SELECT t.content AS content FROM talk t;
 
-SELECT * FROM talkroom
+SELECT * FROM talkroom;
 
 SELECT * FROM talkroom WHERE id LIKE "%'3'%";
 
@@ -112,14 +113,14 @@ SELECT * FROM `talk` WHERE talkroom_id LIKE "%'1'%" GROUP BY talkroom_id;
 
 SELECT * FROM friend;
 
-SELECT * FROM talk
+SELECT * FROM talk;
 
 SELECT * FROM (
     SELECT * FROM `talk`
     WHERE talkroom_id LIKE "%'1'%"  ORDER BY id DESC
      LIMIT 18446744073709551615
     ) a
-    GROUP BY talkroom_id
+    GROUP BY talkroom_id;
 
 SELECT * FROM talk UNION SELECT * FROM `user`;
 

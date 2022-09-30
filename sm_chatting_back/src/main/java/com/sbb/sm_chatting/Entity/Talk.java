@@ -13,7 +13,8 @@ public class Talk {
     private long id;
     private LocalDateTime talkregdate;
     private String content;
-    private int senduserid;
+    private long senduserid;
+    private String files;
 
     @ManyToOne
     private Talkroom talkroom;

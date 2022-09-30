@@ -26,7 +26,7 @@ const ChatList = ({ listMsg, setChatRoomId, chatRoomId }) => {
       <p>{_msg.userInfo.username}</p>
       <div className="flex items-center text-sm text-gray-600">
        <div className="min-w-0">
-        <p className="truncate">{_msg.talkSetting.content}</p>
+        <p className="truncate">{_msg.talkSetting.content === null ? (_msg.talkSetting.files !== null ? "이미지" : null) : _msg.talkSetting.content}</p>
        </div>
       </div>
      </div>

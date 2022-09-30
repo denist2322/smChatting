@@ -6,10 +6,12 @@ import com.sbb.sm_chatting.Entity.Talkroom;
 import com.sbb.sm_chatting.Repository.TalkRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +30,22 @@ public class TalkService {
     public Talk TalkSave(Message message, String roomId, UserId userId) {
         Talk talk = new Talk();
         talk.setTalkregdate(LocalDateTime.now());
-        talk.setContent(message.getContent());
+        // 내용을 저장함 (파일이면 내용은 null로 들어감)
+        try {
+            talk.setContent(message.getContent());
+        }
+        catch (NullPointerException e){
+            talk.setContent(null);
+        }
+        // 파일을 저장함 (내용이면 파일은 null로 들어감)
+        try {
+            talk.setFiles(message.getFiles());
+        }
+        catch (NullPointerException e){
+            talk.setFiles(null);
+        }
+        
+        
         try {
             Talkroom talkroom = talkRoomService.getChatroom(roomId);
             talk.setTalkroom(talkroom);
@@ -36,7 +53,7 @@ public class TalkService {
             return null;
         }
         // userId는 문자열이다. => int형으로 바꾸기 가능.
-        talk.setSenduserid(Integer.parseInt(userId.getUserId()));
+        talk.setSenduserid(Long.parseLong(userId.getUserId()));
 
         talkRepository.save(talk);
         return talk;
@@ -87,4 +104,45 @@ public class TalkService {
         return splitRoomId;
     }
 
+
+    public List<String> fileUpload(List<MultipartFile> files, Long id) {
+        String root = "C:\\upload_file";
+        List<String> result = new ArrayList<>();
+
+        // 파일 경로에 폴더가 존재하는지 체크
+        File fileCheck = new File(root);
+        if (!fileCheck.exists()) fileCheck.mkdirs();
+
+        // 파일을 UUID를 사용하여 저장한다. (이름 중복을 방지함.)
+        List<Map<String, String>> fileList = new ArrayList<>();
+
+        for (int i = 0; i < files.size(); i++) {
+            String originalFile = files.get(i).getOriginalFilename();
+            String ext = originalFile.substring(originalFile.lastIndexOf("."));
+            String changedFile = UUID.randomUUID().toString() + ext;
+
+            Map<String, String> map = new HashMap<>();
+            map.put("originalFile", originalFile);
+            map.put("changeFile", changedFile);
+            fileList.add(map);
+        }
+
+        try {
+            for (int i = 0; i < files.size(); i++) {
+                String filepath = root + "\\" + fileList.get(i).get("changeFile");
+                File uploadFile = new File(filepath);
+                files.get(i).transferTo(uploadFile);
+                result.add(fileList.get(i).get("changeFile"));
+            }
+            System.out.println("파일 업로드 성공");
+            return result;
+        } catch (IllegalStateException | IOException e) {
+            System.out.println("파일 업로드 실패");
+            for (int i = 0; i < files.size(); i++) {
+                new File(root + "\\" + fileList.get(i).get("changeFile")).delete();
+            }
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

@@ -5,6 +5,8 @@ import java.util.Date;
 public interface TalkSetting{
     Date getTalkregdate();
     String getContent();
-    int getSenduserid();
+    long getSenduserid();
+    String getfiles();
     String getTalkroom_id();
+
 }
