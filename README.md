@@ -80,4 +80,6 @@
 ## 📝 Rest API
 ![Rest API](https://user-images.githubusercontent.com/105466435/193569196-70814853-b143-4780-9ae1-20ef91d761d1.png)
 
+## 📝 기술 설명서
+https://wiken.io/ken/10672
 
