@@ -75,7 +75,7 @@
 * npm i base-64
 
 ## 📝 ERD 설계
-![그림1](https://user-images.githubusercontent.com/105466435/193564515-f248fc68-68d8-4d41-b719-7b34ce7ebe98.png)
+![채팅 ERD](https://user-images.githubusercontent.com/105466435/193568662-0e8c3e3c-10e1-410e-8bbe-05e2f6c10b3c.png)
 
 ## 📝 Rest API
 ![Rest API](https://user-images.githubusercontent.com/105466435/193568348-4c090311-b60b-49b6-b659-2abaf5f6b066.png)
