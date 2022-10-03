@@ -78,6 +78,6 @@
 ![채팅 ERD](https://user-images.githubusercontent.com/105466435/193568662-0e8c3e3c-10e1-410e-8bbe-05e2f6c10b3c.png)
 
 ## 📝 Rest API
-![Rest API](https://user-images.githubusercontent.com/105466435/193568348-4c090311-b60b-49b6-b659-2abaf5f6b066.png)
+![Rest API](https://user-images.githubusercontent.com/105466435/193569196-70814853-b143-4780-9ae1-20ef91d761d1.png)
 
 
