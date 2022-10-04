@@ -49,6 +49,10 @@
 * Jwt 인증 서비스
 
 ## 📝 Prerequisite
+### 관리자 정보 
+* ID : admin@test.com
+* PW : 1234
+
 ### 📌BackEnd
 #### Gradle
 * implementation group: 'org.springframework.boot', name: 'spring-boot-starter-websocket', version: '2.7.3'
