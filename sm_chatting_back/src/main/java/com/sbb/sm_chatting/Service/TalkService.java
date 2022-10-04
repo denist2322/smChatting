@@ -96,6 +96,7 @@ public class TalkService {
         return talkChatSettings;
     }
 
+    // == 채팅방 ID 에서 필요한 정보(상대방 아이디, 본인아이디)를 뺀다.
     public String splitChatroomId(String myId, String roomId){
         String splitRoomId = roomId.replace(myId, "");
         splitRoomId = splitRoomId.replace("과", "");
@@ -103,7 +104,7 @@ public class TalkService {
         return splitRoomId;
     }
 
-
+    // == 파일 업로드를 진행한다. ==
     public List<String> fileUpload(List<MultipartFile> files, Long id) {
         String root = "C:\\upload_file";
         List<String> result = new ArrayList<>();
@@ -126,6 +127,7 @@ public class TalkService {
             fileList.add(map);
         }
 
+        // 파일 업로드를 시도한다. (에러 발생시 지금까지 넣었던 파일을 삭제한다.)
         try {
             for (int i = 0; i < files.size(); i++) {
                 String filepath = root + "\\" + fileList.get(i).get("changeFile");

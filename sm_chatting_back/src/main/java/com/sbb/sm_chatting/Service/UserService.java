@@ -64,6 +64,7 @@ public class UserService {
         return user;
     }
 
+    // == 회원가입을 진행하는 서비스 ==
     public String doJoin(Map<String, String> user) {
         if (userRepository.existsByUseremail(user.get("userEmail"))) {
             return "existEmail";
@@ -73,14 +74,17 @@ public class UserService {
         return "success";
     }
 
+    // == 상대방의 정보를 가져온다 (인터페이스에서 뽑아온 정보) ==
     public UserInfo findId(long otherOne) {
         return userRepository.findId(otherOne);
     }
 
+    // == 상대방의 모든 정보를 가져온다. ==
     public User getUserById (long otherOne) {
         return userRepository.findById(otherOne).get();
     }
 
+    // == 유저 정보를 찾고 정보를 뿌려준다. ==
     public UserInfo searchUser(Map<String, String> user) {
         return userRepository.findUseremail(user.get("search"));
     }

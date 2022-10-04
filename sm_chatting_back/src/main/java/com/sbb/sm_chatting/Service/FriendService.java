@@ -26,6 +26,7 @@ public class FriendService {
         friendRepository.delete(friend);
     }
 
+    // == 
     public String findFriend(Map<String, String> info) {
         if(friendRepository.existsByMyidAndUserId(Long.parseLong(info.get("myid")), Long.parseLong(info.get("otherOne")))){
             return "True";
@@ -33,6 +34,7 @@ public class FriendService {
         return "False";
     }
 
+    // == 친구 추가 진행하는 서비스 ==
     public void addFriend(Map<String, String> info) {
         Friend friend = new Friend();
         friend.setMyid(Long.parseLong(info.get("myid")));
