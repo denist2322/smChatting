@@ -82,7 +82,6 @@ public class UserService {
     }
 
     public UserInfo searchUser(Map<String, String> user) {
-        System.out.println(">>>>>>>>>>>>> " + user.get("search"));
         return userRepository.findUseremail(user.get("search"));
     }
 }

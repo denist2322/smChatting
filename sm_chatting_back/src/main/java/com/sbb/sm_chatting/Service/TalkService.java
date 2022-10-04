@@ -44,8 +44,7 @@ public class TalkService {
         catch (NullPointerException e){
             talk.setFiles(null);
         }
-        
-        
+
         try {
             Talkroom talkroom = talkRoomService.getChatroom(roomId);
             talk.setTalkroom(talkroom);
