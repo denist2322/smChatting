@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import base64 from "base-64";
 import axios from "axios";
 
 // MainPage 컴포넌트 시작
@@ -56,10 +55,7 @@ const MainPage = () => {
     }
 
     if (loginData.data !== "emailFalse" && loginData.data !== "pwFalse") {
-      let payload = loginData.data.substring(loginData.data.indexOf(".") + 1, loginData.data.lastIndexOf("."));
-      let dec = JSON.parse(base64.decode(payload));
       localStorage.setItem("Token", loginData.data);
-      localStorage.setItem("id", dec.id);
       navigate("/MessengerPage");
     } else {
       setErrorLogin(loginData.data);

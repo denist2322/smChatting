@@ -26,7 +26,7 @@ public class FriendService {
         friendRepository.delete(friend);
     }
 
-    // == 
+    // ==
     public String findFriend(Map<String, String> info) {
         if(friendRepository.existsByMyidAndUserId(Long.parseLong(info.get("myid")), Long.parseLong(info.get("otherOne")))){
             return "True";

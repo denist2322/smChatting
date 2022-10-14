@@ -1,5 +1,4 @@
-const Main = ({ chatMsg }) => {
-  let userId = parseInt(localStorage.getItem("id"));
+const Main = ({ chatMsg, userId }) => {
   return (
     <>
       {chatMsg.map((_msg, index) =>
