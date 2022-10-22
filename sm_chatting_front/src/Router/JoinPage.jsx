@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { url } from "../ConfigHost.js";
 
 const JoinPage = () => {
  const [userEmail, setUserEmail] = useState("");
@@ -37,7 +38,7 @@ const JoinPage = () => {
   // 공백상태일 경우 프론트에서 차단하여 통신을 하지 못하도록 함.
   if (userEmail !== "" && userName !== "" && userPassword !== "" && passwordComfirm !== "")
    joinData = await axios({
-    url: `http://localhost:8031/join`,
+    url: `${url}/join`,
     method: "POST",
     data: {
      userEmail,

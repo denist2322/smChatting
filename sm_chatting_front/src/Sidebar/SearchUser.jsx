@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UserModal from "../Component/Modal/UserModal";
 import AlertModal from "../Component/Modal/alertModal";
+import { url } from "../ConfigHost.js";
 const SearchUser = ({ userId, setActive, setChatRoomId }) => {
  const [search, setSearch] = useState("");
  const [searchUserInfo, setSearchUserInfo] = useState("");
@@ -11,7 +12,7 @@ const SearchUser = ({ userId, setActive, setChatRoomId }) => {
  const searchSubmit = async (e, search) => {
   e.preventDefault();
   const searchUser = await axios({
-   url: "http://localhost:8031/searchUser",
+   url: `${url}/searchUser`,
    method: "POST",
    data: {
     search,

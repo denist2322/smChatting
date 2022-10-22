@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { url } from "../ConfigHost.js";
 const Header = ({ chatRoomId, userId }) => {
  const [otherOneName, setOtherOneName] = useState("");
 
  useEffect(() => {
   const getOtherOneName = async () => {
    const otherOne = await axios({
-    url: `http://localhost:8031/otherOneName`,
+    url: `${url}/otherOneName`,
     method: "POST",
     data: {
      myId: userId,

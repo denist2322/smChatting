@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Modal from "../Component/Modal/UserModal.jsx";
+import { url } from "../ConfigHost.js";
 const Users = ({ userId, active, setActive, setChatRoomId }) => {
  // 친구목록을 받을거다.
  const [friend, setFriend] = useState([]);
@@ -9,7 +10,7 @@ const Users = ({ userId, active, setActive, setChatRoomId }) => {
   setActive("False");
   const userList = async () => {
    const userData = await axios({
-    url: `http://localhost:8031/friendList`,
+    url: `${url}/friendList`,
     method: "POST",
     data: {
      myid: userId,
