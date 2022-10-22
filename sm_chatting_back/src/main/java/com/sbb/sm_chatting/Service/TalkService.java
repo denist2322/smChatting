@@ -1,10 +1,13 @@
 package com.sbb.sm_chatting.Service;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.sbb.sm_chatting.DTO.*;
 import com.sbb.sm_chatting.Entity.Talk;
 import com.sbb.sm_chatting.Entity.Talkroom;
 import com.sbb.sm_chatting.Repository.TalkRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +23,11 @@ public class TalkService {
     private final TalkRepository talkRepository;
     private final TalkRoomService talkRoomService;
     private final UserService userService;
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
+
+    private final AmazonS3 amazonS3;
 
     // 대화내용을 대화 방 기준으로 추출한다.
     public List<TalkSetting> talkList(String id) {
@@ -145,5 +153,20 @@ public class TalkService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public void awsFileUpload(List<MultipartFile> files) throws IOException {
+        files.stream()
+                .forEach(file-> {
+                    String s3FileName = String.valueOf(UUID.randomUUID());
+                    ObjectMetadata objectMetadata = new ObjectMetadata();
+                    try{
+                        objectMetadata.setContentLength(file.getInputStream().available());
+                        amazonS3.putObject(bucket, s3FileName, file.getInputStream(), objectMetadata);
+                    }catch (IOException e){
+                        throw new RuntimeException(e);
+                    }
+                });
+
     }
 }

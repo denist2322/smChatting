@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,5 +60,10 @@ public class ChatController {
     @PostMapping("/fileUpload")
     public List<String> fileUpload(@RequestParam("files") List<MultipartFile> files, @RequestParam("id") Long id){
         return talkService.fileUpload(files, id);
+    }
+
+    @PostMapping("/awsUploadTest")
+    public void awsUploadTest(@RequestParam("files") List<MultipartFile> files) throws IOException {
+        talkService.awsFileUpload(files);
     }
 }
