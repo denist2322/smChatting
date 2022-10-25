@@ -40,6 +40,7 @@ const Messenger = () => {
    client.send(`/app/chatRoomSetting/'${userId}'`, {});
    // 1-1. 1연결로 얻은 값
    client.subscribe(`/queue/chatRoomSetting/'${userId}'`, function (Message) {
+    console.log("들어옴111");
     const newMsg = JSON.parse(Message.body);
     setListMsg(newMsg);
    });
@@ -58,6 +59,7 @@ const Messenger = () => {
    client.send(`/app/first/${chatRoomId}`, {});
 
    client.subscribe(`/queue/firstChat/${chatRoomId}`, function (Message) {
+    console.log("들어옴222");
     const newMsg = JSON.parse(Message.body);
     setchatMsg(newMsg);
    });
