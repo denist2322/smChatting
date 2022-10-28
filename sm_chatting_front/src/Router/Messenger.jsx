@@ -36,11 +36,22 @@ const Messenger = () => {
   setContent("");
 
   client.connect({}, () => {
-   // === 1. 채팅방 셋팅 (send를 통해 웹소캣 연결) ===
+   client.send(`/app/first/${chatRoomId}`, {});
+
+   client.subscribe(`/queue/firstChat/${chatRoomId}`, function (Message) {
+    const newMsg = JSON.parse(Message.body);
+    setchatMsg(newMsg);
+   });
+
+   client.subscribe(`/queue/addChatToClient/${chatRoomId}`, function (Message) {
+    const newMsg = JSON.parse(Message.body);
+    setchatMsg((prev) => [...prev, newMsg]);
+   });
+
    client.send(`/app/chatRoomSetting/'${userId}'`, {});
+   // === 1. 채팅방 셋팅 (send를 통해 웹소캣 연결) ===
    // 1-1. 1연결로 얻은 값
    client.subscribe(`/queue/chatRoomSetting/'${userId}'`, function (Message) {
-    console.log("들어옴111");
     const newMsg = JSON.parse(Message.body);
     setListMsg(newMsg);
    });
@@ -54,20 +65,6 @@ const Messenger = () => {
      )
     );
    });
-
-   // === 2. 대화내용 셋팅 (send는 사이드바 채팅방을 누르면 실행됨.) ===
-   client.send(`/app/first/${chatRoomId}`, {});
-
-   client.subscribe(`/queue/firstChat/${chatRoomId}`, function (Message) {
-    console.log("들어옴222");
-    const newMsg = JSON.parse(Message.body);
-    setchatMsg(newMsg);
-   });
-
-   client.subscribe(`/queue/addChatToClient/${chatRoomId}`, function (Message) {
-    const newMsg = JSON.parse(Message.body);
-    setchatMsg((prev) => [...prev, newMsg]);
-   });
   });
 
   // 연결을 끊는다 (소캣을 지운다.)
@@ -75,7 +72,7 @@ const Messenger = () => {
   return async () => {
    await client.disconnect();
   };
-  // 채팅방이 생성되면 새로 연결이 필요함. ([]에 내용추가)
+  // 채팅방을 입장하면 새로 연결이 필요함. ([]에 내용추가)
  }, [chatRoomId]);
 
  return (
