@@ -14,8 +14,6 @@ const Messenger = () => {
  const [chatMsg, setchatMsg] = useState([]);
  // 사이드바 채팅방 메세지 미리보기에 사용됨
  const [listMsg, setListMsg] = useState([]);
- // 입력된 대화 내용
- const [content, setContent] = useState("");
  const [chatRoomId, setChatRoomId] = useState("");
  // 로그인 되어 있는지 체크한다.
  const isLogined = async (e) => {
@@ -33,8 +31,6 @@ const Messenger = () => {
  const userId = dec.id;
 
  useEffect(() => {
-  setContent("");
-
   client.connect({}, () => {
    client.send(`/app/first/${chatRoomId}`, {});
 
@@ -68,7 +64,6 @@ const Messenger = () => {
   });
 
   // 연결을 끊는다 (소캣을 지운다.)
-
   return async () => {
    await client.disconnect();
   };
@@ -80,7 +75,7 @@ const Messenger = () => {
    <div className="flex flex-col flex-1">
     <main className="flex flex-row flex-grow min-h-0">
      <Sidebar listMsg={listMsg} setChatRoomId={setChatRoomId} userId={userId} chatRoomId={chatRoomId} />
-     <Chat chatMsg={chatMsg} setchatMsg={setchatMsg} client={client} content={content} setContent={setContent} chatRoomId={chatRoomId} userId={userId} />
+     <Chat chatMsg={chatMsg} setchatMsg={setchatMsg} client={client} chatRoomId={chatRoomId} userId={userId} />
     </main>
    </div>
   </div>

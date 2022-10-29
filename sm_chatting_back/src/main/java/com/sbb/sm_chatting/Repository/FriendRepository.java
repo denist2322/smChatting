@@ -13,7 +13,7 @@ import java.util.List;
 public interface FriendRepository extends JpaRepository<Friend, Long> {
     List<FriendSetting> findByMyid(long id);
 
-    @Query(value = "SELECT * FROM Friend f WHERE (f.myid = :myid AND f.user_id = :user_id);", nativeQuery = true)
+    @Query(value = "SELECT * FROM friend f WHERE (f.myid = :myid AND f.user_id = :user_id);", nativeQuery = true)
     Friend findByMyidUserId(@Param("myid") Long myid, @Param("user_id") Long user_id);
 
     boolean existsByMyidAndUserId(long myid, long otherOne);

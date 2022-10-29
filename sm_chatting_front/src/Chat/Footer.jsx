@@ -1,16 +1,17 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import { url } from "../ConfigHost.js";
 
-const Footer = ({ client, content, setContent, chatRoomId, userId }) => {
+const Footer = ({ client, chatRoomId, userId }) => {
  const fileInput = useRef(null);
+ const [footerContent, setFooterContent] = useState("");
  // 메시지 제출
- const handleSubmit = (e, content) => {
+ const handleSubmit = (e, footerContent) => {
   e.preventDefault();
   // 내용이 없으면 전송이 불가능하다.
-  if (content.trim().length !== 0) {
-   client.send(`/app/chat/${chatRoomId}`, {}, JSON.stringify({ content, userId }));
-   setContent("");
+  if (footerContent.trim().length !== 0) {
+   client.send(`/app/chat/${chatRoomId}`, {}, JSON.stringify({ content: footerContent, userId }));
+   setFooterContent("");
   }
  };
 
@@ -30,14 +31,13 @@ const Footer = ({ client, content, setContent, chatRoomId, userId }) => {
    data: formData,
   });
   const files = fileData.data;
-  console.log("files : ", files);
   for (let i = 0; i < files.length; i++) {
    client.send(`/app/chat/${chatRoomId}`, {}, JSON.stringify({ files: files[i], userId }));
   }
  };
 
  return (
-  <form onSubmit={(e) => handleSubmit(e, content)}>
+  <form onSubmit={(e) => handleSubmit(e, footerContent)}>
    <div className="flex flex-row items-center p-4">
     <button type="button" className="flex flex-shrink-0 block w-6 h-6 mx-2 text-blue-600 focus:outline-none hover:text-blue-700">
      <svg viewBox="0 0 20 20" className="w-full h-full fill-current" onClick={handleButtonClick}>
@@ -50,9 +50,9 @@ const Footer = ({ client, content, setContent, chatRoomId, userId }) => {
       <input
        className="w-full py-2 pl-3 pr-10 text-gray-200 transition duration-300 ease-in bg-gray-800 border border-gray-800 rounded-full focus:border-gray-700 focus:bg-gray-900 focus:outline-none focus:shadow-md"
        type="text"
-       value={content}
+       value={footerContent}
        onChange={(e) => {
-        setContent(e.target.value);
+        setFooterContent(e.target.value);
        }}
       />
       <button type="button" className="absolute top-0 right-0 flex flex-shrink-0 block w-6 h-6 mt-2 mr-3 text-blue-600 focus:outline-none hover:text-blue-700">
