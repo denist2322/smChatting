@@ -11,10 +11,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -112,61 +113,23 @@ public class TalkService {
         return splitRoomId;
     }
 
-    // == 파일 업로드를 진행한다. ==
-    public List<String> fileUpload(List<MultipartFile> files, Long id) {
-        String root = "C:\\upload_file";
+    // S3버킷에 파일을 업로드 한다.
+    public List<String> awsFileUpload(List<MultipartFile> files, long id) throws IOException {
         List<String> result = new ArrayList<>();
-
-        // 파일 경로에 폴더가 존재하는지 체크
-        File fileCheck = new File(root);
-        if (!fileCheck.exists()) fileCheck.mkdirs();
-
-        // 파일을 UUID를 사용하여 저장한다. (이름 중복을 방지함.)
-        List<Map<String, String>> fileList = new ArrayList<>();
-
-        for (int i = 0; i < files.size(); i++) {
-            String originalFile = files.get(i).getOriginalFilename();
-            String ext = originalFile.substring(originalFile.lastIndexOf("."));
-            String changedFile = UUID.randomUUID().toString() + ext;
-
-            Map<String, String> map = new HashMap<>();
-            map.put("originalFile", originalFile);
-            map.put("changeFile", changedFile);
-            fileList.add(map);
-        }
-
-        // 파일 업로드를 시도한다. (에러 발생시 지금까지 넣었던 파일을 삭제한다.)
-        try {
-            for (int i = 0; i < files.size(); i++) {
-                String filepath = root + "\\" + fileList.get(i).get("changeFile");
-                File uploadFile = new File(filepath);
-                files.get(i).transferTo(uploadFile);
-                result.add(fileList.get(i).get("changeFile"));
-            }
-            System.out.println("파일 업로드 성공");
-            return result;
-        } catch (IllegalStateException | IOException e) {
-            System.out.println("파일 업로드 실패");
-            for (int i = 0; i < files.size(); i++) {
-                new File(root + "\\" + fileList.get(i).get("changeFile")).delete();
-            }
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public void awsFileUpload(List<MultipartFile> files) throws IOException {
         files.stream()
                 .forEach(file-> {
-                    String s3FileName = String.valueOf(UUID.randomUUID());
+                    String originalFile = file.getOriginalFilename();
+                    String ext = originalFile.substring(originalFile.lastIndexOf("."));
+                    String s3FileName = UUID.randomUUID().toString() + ext;
                     ObjectMetadata objectMetadata = new ObjectMetadata();
                     try{
                         objectMetadata.setContentLength(file.getInputStream().available());
                         amazonS3.putObject(bucket, s3FileName, file.getInputStream(), objectMetadata);
+                        result.add(s3FileName);
                     }catch (IOException e){
                         throw new RuntimeException(e);
                     }
                 });
-
+        return result;
     }
 }

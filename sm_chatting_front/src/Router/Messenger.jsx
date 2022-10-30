@@ -29,7 +29,8 @@ const Messenger = () => {
  let payload = tmp.substring(tmp.indexOf(".") + 1, tmp.lastIndexOf("."));
  let dec = JSON.parse(base64.decode(payload));
  const userId = dec.id;
-
+ // 옆에 콘솔창에 send 및 subscribe 표시를 꺼준다.
+ client.debug = null;
  useEffect(() => {
   client.connect({}, () => {
    client.send(`/app/first/${chatRoomId}`, {});

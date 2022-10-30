@@ -11,7 +11,7 @@ const Main = ({ chatMsg, userId }) => {
         {_msg.content !== null ? (
          <p className="px-4 py-2 rounded-t-full rounded-l-full bg-blue-700 max-w-xs lg:max-w-md"> {_msg.content} </p>
         ) : (
-         <img src={`${url}/upload_file/${_msg.files}`} alt="이미지를 불러올 수 없습니다." className="w-60 h-60" />
+         <img src={`https://smchatting.s3.ap-northeast-2.amazonaws.com/${_msg.files}`} alt="이미지를 불러올 수 없습니다." className="w-60 h-60" />
         )}
 
         <button

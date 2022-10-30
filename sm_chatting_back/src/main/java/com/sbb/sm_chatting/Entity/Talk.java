@@ -15,7 +15,6 @@ public class Talk {
     private String content;
     private long senduserid;
     private String files;
-
     @ManyToOne
     private Talkroom talkroom;
 

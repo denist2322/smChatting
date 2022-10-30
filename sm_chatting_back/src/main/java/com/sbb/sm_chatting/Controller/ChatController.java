@@ -57,13 +57,9 @@ public class ChatController {
         this.simpMessagingTemplate.convertAndSend("/queue/chatRoomSetting/" + id, talkChatSettings);
     }
 
+    // 파일 업로드를 진행한다.
     @PostMapping("/fileUpload")
-    public List<String> fileUpload(@RequestParam("files") List<MultipartFile> files, @RequestParam("id") Long id){
-        return talkService.fileUpload(files, id);
-    }
-
-    @PostMapping("/awsUploadTest")
-    public void awsUploadTest(@RequestParam("files") List<MultipartFile> files) throws IOException {
-        talkService.awsFileUpload(files);
+    public List<String> awsUploadTest(@RequestParam("files") List<MultipartFile> files, @RequestParam("id") Long id) throws IOException {
+        return talkService.awsFileUpload(files, id);
     }
 }
